@@ -42,7 +42,9 @@ Android style page control
 ```obj-c
 //2. DECLARE
   ADPageControl *_pageControl; //Declare
-  
+```  
+
+```obj-c  
 //3. SETUP PAGE MODEL USING CLASS "ADPageModel"
 
     //page 0
@@ -70,23 +72,31 @@ Android style page control
     pageModel3.strPageTitle = @"Yeeellow";
     pageModel3.iPageNumber = 3;
     pageModel3.bShouldLazyLoad = YES;  
-    
+```
+
+```obj-c
 //4. INITIALIZE PAGE CONTROL
     _pageControl = [[ADPageControl alloc] init];
     _pageControl.iFirstVisiblePageNumber = 1;
     _pageControl.delegateADPageControl = self;
     _pageControl.arrPageModel = [[NSMutableArray alloc] initWithObjects:pageModel0,pageModel1,pageModel2,pageModel3, nil];
+```
 
+```obj-c
 //5. SET THEME COLORS
     _pageControl.colorTabText = [UIColor whiteColor];
     _pageControl.colorTitleBarBackground = [UIColor purpleColor];
     _pageControl.colorPageIndicator = [UIColor whiteColor];
     _pageControl.colorPageOverscrollBackground = [UIColor darkGrayColor];
+```
 
+```obj-c
 //6. ADD AS SUBVIEW
     _pageControl.view.frame = CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.height - 20);
     [self.view addSubview:_pageControl.view];
+```
 
+```obj-c
 //7. CONFORM TO DELEGATE & HANDLE LAZY LOADING BY PROVIDING VIEW CONTROLLERS
 
 //Conform <ADPageControlDelegate>
