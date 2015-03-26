@@ -37,10 +37,12 @@ Android style page control
 
 //1. IMPORT
   "#import "ADPageControl.h"
+```
 
+```obj-c
 //2. DECLARE
   ADPageControl *_pageControl; //Declare
-
+  
 //3. SETUP PAGE MODEL USING CLASS "ADPageModel"
 
     //page 0
