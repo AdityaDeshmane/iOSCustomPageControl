@@ -10,29 +10,31 @@
 	<string>ADCustomPageControl</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>49d6d433-19cb-46f1-86fc-b3cf35cd7709</key>
-		<string>http://svn.sct.lan/svn/HungamaMusic</string>
+		<key>CFA54DCFF5C97646138E125943973125AB558739</key>
+		<string>https://github.com/AdityaDeshmane/iOSCustomPageControl.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Branches/iOS4.1/POCs/CustomPageController/ADCustomPageControl/ADCustomPageControl.xcodeproj</string>
+	<string>ADCustomPageControl/ADCustomPageControl.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>49d6d433-19cb-46f1-86fc-b3cf35cd7709</key>
-		<string>../../../../../../..</string>
+		<key>CFA54DCFF5C97646138E125943973125AB558739</key>
+		<string>../../..</string>
 	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AdityaDeshmane/iOSCustomPageControl.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>49d6d433-19cb-46f1-86fc-b3cf35cd7709</string>
+	<string>CFA54DCFF5C97646138E125943973125AB558739</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>49d6d433-19cb-46f1-86fc-b3cf35cd7709</string>
+			<string>CFA54DCFF5C97646138E125943973125AB558739</string>
 			<key>IDESourceControlWCCName</key>
-			<string>SVN</string>
+			<string>iOSCustomPageControl_Repo</string>
 		</dict>
 	</array>
 </dict>
