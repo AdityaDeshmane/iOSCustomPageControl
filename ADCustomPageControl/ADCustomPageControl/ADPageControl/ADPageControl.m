@@ -39,6 +39,7 @@
 -(void)setupPages;
 -(void)setupTitles;
 -(IBAction)tabPressed:(id)sender;
+-(void)setPageIndicatorToPageNumber:(int) pageNumber andShouldHighlightCurrentPage:(BOOL) shouldHighlight;
 
 @end
 
@@ -51,15 +52,15 @@
     
     [self setupPages];
     [self setupTitles];
-    [self setPageIndicatorToPageNumber:_iFirstVisiblePageNumber];
+    [self setPageIndicatorToPageNumber:_iFirstVisiblePageNumber andShouldHighlightCurrentPage:YES];
 }
 
 #pragma mark - Initialization methods
 
 -(void)setupPages
 {
-   if(_iFirstVisiblePageNumber >= _arrPageModel.count)
-       _iFirstVisiblePageNumber = 0 ;
+    if(_iFirstVisiblePageNumber >= _arrPageModel.count)
+        _iFirstVisiblePageNumber = 0 ;
     
     _iCurrentVisiblePage = _iFirstVisiblePageNumber;
     
@@ -209,7 +210,8 @@
     }
 }
 
--(void)setPageIndicatorToPageNumber:(int) pageNumber
+
+-(void)setPageIndicatorToPageNumber:(int) pageNumber andShouldHighlightCurrentPage:(BOOL) bShouldHighlight
 {
     float fLeading = 0;
     float fWidth = [[_arrTabWidth objectAtIndex:pageNumber] floatValue];
@@ -228,15 +230,19 @@
          [_viewPageIndicator layoutIfNeeded];
      }];
     
-    _iCurrentVisiblePage = pageNumber;
     
-    for (UIButton *tabButton in _arrTabButtons)
+    if(bShouldHighlight)//Set page as current visible page
     {
-        tabButton.alpha = 0.7;
+        _iCurrentVisiblePage = pageNumber;
+        
+        for (UIButton *tabButton in _arrTabButtons)
+        {
+            tabButton.alpha = 0.7;
+        }
+        
+        UIButton *currentTabButton = [_arrTabButtons objectAtIndex:_iCurrentVisiblePage];
+        currentTabButton.alpha = 1.0;
     }
-    
-    UIButton *currentTabButton = [_arrTabButtons objectAtIndex:_iCurrentVisiblePage];
-    currentTabButton.alpha = 1.0;
 }
 
 #pragma mark - IBActions
@@ -247,20 +253,20 @@
     int iPageNumber = (int)btn.tag - 300;
     
     NSLog(@"Tab : %d pressed",iPageNumber );
-
+    
     dispatch_async(dispatch_get_main_queue(),
-   ^{
-       
-       ADPageModel *pageModel = [_arrPageModel objectAtIndex:iPageNumber];
-       //animate to next page
-       [_pageViewController setViewControllers:@[[self getViewControllerForPageModel:pageModel]]
-                                     direction: (_iCurrentVisiblePage < iPageNumber) ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse
-                                      animated:YES
-                                    completion:^(BOOL finished){}];
-       
-       [self setPageIndicatorToPageNumber:iPageNumber];
-
-   });
+                   ^{
+                       
+                       ADPageModel *pageModel = [_arrPageModel objectAtIndex:iPageNumber];
+                       //animate to next page
+                       [_pageViewController setViewControllers:@[[self getViewControllerForPageModel:pageModel]]
+                                                     direction: (_iCurrentVisiblePage < iPageNumber) ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse
+                                                      animated:YES
+                                                    completion:^(BOOL finished){}];
+                       
+                       [self setPageIndicatorToPageNumber:iPageNumber andShouldHighlightCurrentPage:YES];
+                       
+                   });
 }
 
 
@@ -298,7 +304,10 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
-    NSLog(@"About to make transition");
+    int pageNumber = [self getPageNumberForViewController:[pendingViewControllers lastObject]];
+    NSLog(@"About to make transition to page number : %d",pageNumber);
+    
+    [self setPageIndicatorToPageNumber:pageNumber andShouldHighlightCurrentPage:NO];
     
 }
 
@@ -308,9 +317,12 @@
     {
         int pageNumber = [self getPageNumberForViewController:[_pageViewController.viewControllers lastObject]];
         
-        NSLog(@"Current page number : %d",pageNumber);
-        [self setPageIndicatorToPageNumber:pageNumber];
-
+        NSLog(@"Current visible page number : %d",pageNumber);
+        [self setPageIndicatorToPageNumber:pageNumber andShouldHighlightCurrentPage:YES];
+    }
+    else
+    {
+        [self setPageIndicatorToPageNumber:_iCurrentVisiblePage andShouldHighlightCurrentPage:NO];
     }
 }
 
