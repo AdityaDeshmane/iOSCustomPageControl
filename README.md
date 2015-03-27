@@ -154,6 +154,7 @@ ADPageControl works on iOS 5.0 & above versions and is compatible with ARC proje
 
 * Component polishing
 * More generalizations
+* Show indicator to left and right end of title bar when more pages are available
 
 ---
 ---
