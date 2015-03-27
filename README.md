@@ -5,7 +5,7 @@ Android style page control
 
 
 * Easy to modify 
-* Lazy loading for smoother performance
+* Lazy loading for smoother performance ( Provide view controller instances only when moved to that page )
 * Customizable component color
 
 <em>This UI control can be used on all iPhones, iPods & iPads running iOS 5.0 and above.</em>
