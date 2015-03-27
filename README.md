@@ -154,7 +154,6 @@ ADPageControl works on iOS 5.0 & above versions and is compatible with ARC proje
 
 * Component polishing
 * More generalizations
-* Page indicator movement along with page scrolling
 
 ---
 ---
