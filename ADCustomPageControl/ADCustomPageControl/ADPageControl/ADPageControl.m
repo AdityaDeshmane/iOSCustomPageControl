@@ -23,7 +23,6 @@
 {
     UIPageViewController *_pageViewController;
     NSMutableArray *_arrTabWidth;
-    float _lastContentOffset;
     int _iCurrentVisiblePage;
     NSMutableArray *_arrTabButtons;
 }
@@ -177,7 +176,7 @@
 
 -(void)setWidthArray
 {
-    _arrTabWidth = [[NSMutableArray alloc] init];//[[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat:200],[NSNumber numberWithFloat:100],[NSNumber numberWithFloat:200], nil];
+    _arrTabWidth = [[NSMutableArray alloc] init];
     
     //Label width calculation
     float expectedLabelWidth = 0;
