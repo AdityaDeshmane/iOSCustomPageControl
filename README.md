@@ -158,3 +158,6 @@ ADPageControl works on iOS 5.0 & above versions and is compatible with ARC proje
 
 ---
 ---
+## License
+
+iOSCustomPageControl is available under the MIT license. See the LICENSE file for more info.
