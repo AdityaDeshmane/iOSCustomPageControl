@@ -139,7 +139,7 @@ Features
 
 ### Requirements
 
-ADPageControl works on iOS 5.0 & above versions and is compatible with ARC projects. There is no need of other frameworks/libraries
+ADPageControl works on iOS 6.0 & above versions and is compatible with ARC projects. There is no need of other frameworks/libraries
 
 ---
 ---
