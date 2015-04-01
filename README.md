@@ -3,12 +3,15 @@ Android style page control
 
 ![      ](\pageControl.gif "")       
 
-
-* Easy to modify 
+Features
+* Swipable tab bar
+* Clickable tab to move to spefic page
+* Current page indicator with fade effect on non current title
+* Easy to modify code
 * Lazy loading for smoother performance ( Provide view controller instances only when moved to that page )
-* Customizable component color
+* Easy to setup color theme
 
-<em>This UI control can be used on all iPhones, iPods & iPads running iOS 5.0 and above.</em>
+<em>This UI control can be used on all iPhones, iPods & iPads running iOS 6.0 and above.</em>
 
 ---
 ---
@@ -16,7 +19,7 @@ Android style page control
 ### Adding to your project
 
 
-* Add Follwing 5 control files to your project from ADPageControl directory
+* Add Follwing 5 control files to your project from ADPageControl directory located under ControlFiles/ and in demo project
 
 ```
 'ADPageControl.h'
