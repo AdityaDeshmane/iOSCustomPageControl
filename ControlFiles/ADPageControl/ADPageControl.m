@@ -7,7 +7,6 @@
 //
 
 #import "ADPageControl.h"
-#import "PageItemController.h"
 
 //Constants
 #define HUGE_WIDTH_VALUE 1500
