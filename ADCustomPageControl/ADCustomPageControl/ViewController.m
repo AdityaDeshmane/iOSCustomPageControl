@@ -53,7 +53,7 @@
     //page 0
     ADPageModel *pageModel0 = [[ADPageModel alloc] init];
     UIViewController *page0 = [UIViewController new];
-    page0.view.backgroundColor = [UIColor colorWithRed:1 green:204.0/255 blue:204.0/255.0 alpha:1.0];
+    page0.view.backgroundColor = [UIColor colorWithRed:1 green:204.0/255 blue:204.0/255.0 alpha:1.0];//Light Red
     pageModel0.strPageTitle = @"Reeed";
     pageModel0.iPageNumber = 0;
     pageModel0.viewController = page0;//You can provide view controller in prior OR use flag "bShouldLazyLoad" to load only when required
@@ -118,21 +118,21 @@
     if(pageModel.iPageNumber == 1)
     {
         UIViewController *page1 = [UIViewController new];
-        page1.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:1 blue:204.0/255 alpha:1.0];
+        page1.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:1 blue:204.0/255 alpha:1.0];//Light Green
 
         return page1;
     }
     else if(pageModel.iPageNumber == 2)
     {
         UIViewController *page2 = [UIViewController new];
-        page2.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:204.0/255 blue:1 alpha:1.0];
+        page2.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:204.0/255 blue:1 alpha:1.0];//Light Blue
         
         return page2;
     }
     else if(pageModel.iPageNumber == 3)
     {
         UIViewController *page3 = [UIViewController new];
-        page3.view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:204.0/255 alpha:1.0];
+        page3.view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:204.0/255 alpha:1.0];//Light Yellow
         
         return page3;
     }
