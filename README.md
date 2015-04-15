@@ -4,12 +4,35 @@ Android style page control
 ![      ](\pageControl.gif "")       
 
 Features
+
 * Swipable tab bar
 * Clickable tab to move to spefic page
 * Current page indicator with fade effect on non current title
 * Easy to modify code
 * Lazy loading for smoother performance ( Provide view controller instances only when moved to that page )
 * Easy to setup color theme
+
+Customisation parameters
+
+```obj-c
+//Initial visible page
+@property(readwrite) int            iFirstVisiblePageNumber;
+
+//Color theme
+@property(readwrite) UIColor        *colorTitleBarBackground;
+@property(readwrite) UIColor        *colorTabText;
+@property(readwrite) UIColor        *colorPageIndicator;
+@property(readwrite) UIColor        *colorPageOverscrollBackground;
+
+//UI Size related customisation
+@property(readwrite) int            iTitileViewHeight;
+@property(readwrite) int            iPageIndicatorHeight;
+@property(readwrite) UIFont         *fontTitleTabText;
+
+//Bounce effect on/off
+@property(readwrite) BOOL           bEnablePagesEndBounceEffect;
+@property(readwrite) BOOL           bEnableTitlesEndBounceEffect;
+```
 
 <em>This UI control can be used on all iPhones, iPods & iPads running iOS 6.0 and above.</em>
 
@@ -19,7 +42,7 @@ Features
 ### Adding to your project
 
 
-* Add Follwing 5 control files to your project from ADPageControl directory located under ControlFiles/ and in demo project
+* Add Follwing 5 control files to your project from ADPageControl directory located under "ControlFiles/" or from demo project
 
 ```
 'ADPageControl.h'
@@ -52,12 +75,12 @@ Features
 
     //page 0
     ADPageModel *pageModel0 = [[ADPageModel alloc] init];
-    PageItemController *page0 = [self.storyboard instantiateViewControllerWithIdentifier:@"PAGE"];
+    UIViewController *page0 = [UIViewController new];
     page0.view.backgroundColor = [UIColor colorWithRed:1 green:204.0/255 blue:204.0/255.0 alpha:1.0];
     pageModel0.strPageTitle = @"Reeed";
     pageModel0.iPageNumber = 0;
-    pageModel0.viewController = page0;//You can provide view control in prior OR use flag "bShouldLazyLoad" to load only when required
-
+    pageModel0.viewController = page0;//You can provide view controller in prior OR use flag "bShouldLazyLoad" to load only when required
+    
     //page 1
     ADPageModel *pageModel1 = [[ADPageModel alloc] init];
     pageModel1.strPageTitle = @"Greeeeeeeen";
@@ -74,19 +97,28 @@ Features
     ADPageModel *pageModel3 = [[ADPageModel alloc] init];
     pageModel3.strPageTitle = @"Yeeellow";
     pageModel3.iPageNumber = 3;
-    pageModel3.bShouldLazyLoad = YES;  
+    pageModel3.bShouldLazyLoad = YES;
 ```
 
 ```obj-c
 //4. INITIALIZE PAGE CONTROL
+
     _pageControl = [[ADPageControl alloc] init];
-    _pageControl.iFirstVisiblePageNumber = 1;
     _pageControl.delegateADPageControl = self;
     _pageControl.arrPageModel = [[NSMutableArray alloc] initWithObjects:pageModel0,pageModel1,pageModel2,pageModel3, nil];
 ```
 
 ```obj-c
-//5. SET THEME COLORS
+//5. OPTIONAL CUSTOMISATION PARAMETERS SETUP
+
+    _pageControl.iFirstVisiblePageNumber = 1;
+    _pageControl.iTitileViewHeight = 40;
+    _pageControl.iPageIndicatorHeight = 4;
+    _pageControl.fontTitleTabText =  [UIFont fontWithName:@"Helvetica" size:16];
+    
+    _pageControl.bEnablePagesEndBounceEffect = NO;
+    _pageControl.bEnableTitlesEndBounceEffect = NO;
+    
     _pageControl.colorTabText = [UIColor whiteColor];
     _pageControl.colorTitleBarBackground = [UIColor purpleColor];
     _pageControl.colorPageIndicator = [UIColor whiteColor];
@@ -108,23 +140,20 @@ Features
 {
     if(pageModel.iPageNumber == 1)
     {
-        PageItemController *page1 = [self.storyboard instantiateViewControllerWithIdentifier:@"PAGE"];
+        UIViewController *page1 = [UIViewController new];
         page1.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:1 blue:204.0/255 alpha:1.0];
-
         return page1;
     }
     else if(pageModel.iPageNumber == 2)
     {
-        PageItemController *page2 = [self.storyboard instantiateViewControllerWithIdentifier:@"PAGE"];
+        UIViewController *page2 = [UIViewController new];
         page2.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:204.0/255 blue:1 alpha:1.0];
-        
         return page2;
     }
     else if(pageModel.iPageNumber == 3)
     {
-        PageItemController *page3 = [self.storyboard instantiateViewControllerWithIdentifier:@"PAGE"];
+        UIViewController *page3 = [UIViewController new];
         page3.view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:204.0/255 alpha:1.0];
-        
         return page3;
     }
     
@@ -139,7 +168,8 @@ Features
 
 ### Requirements
 
-ADPageControl works on iOS 6.0 & above versions and is compatible with ARC projects. There is no need of other frameworks/libraries
+* ADPageControl works on iOS 6.0 & above versions and is compatible with ARC projects. 
+* There is no need of other frameworks/libraries.
 
 ---
 ---
