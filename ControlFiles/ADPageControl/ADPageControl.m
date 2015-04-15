@@ -56,8 +56,14 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicotorWidth;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintTitleViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorTop;
-@property (strong, nonatomic) IBOutlet UIView               *viewLeftDummy;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorHeight;
+
+//Many apps nowadays use drawer control,
+//this 4 pixel width dummy views at both edges disables touches on edges in order to open drawer on edge swipe
+//Hide them, if you want this control to respond to touches at end as well..
+//To hide, add lines _viewLeftDummy.hidden = YES; _viewRightDummy.hidden = YES; in viewDidLoad
+@property (strong, nonatomic) IBOutlet UIView               *viewLeftDummy;
+@property (strong, nonatomic) IBOutlet UIView               *viewRightDummy;
 
 //Private methods
 -(void)setupPages;
@@ -78,6 +84,7 @@
     [self setupTitleView];
     [self setPageIndicatorToPageNumber:_iFirstVisiblePageNumber andShouldHighlightCurrentPage:YES];
     [_viewContainer bringSubviewToFront:_viewLeftDummy];
+    [_viewContainer bringSubviewToFront:_viewRightDummy];
     [self enablePagesEndBounceEffect:_bEnablePagesEndBounceEffect];
     _scrollViewTitle.bounces = _bEnableTitlesEndBounceEffect;
 }
