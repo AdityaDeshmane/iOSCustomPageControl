@@ -43,7 +43,6 @@
 {
     UIPageViewController    *_pageViewController;
     NSMutableArray          *_arrTabWidth;
-    float                   _lastContentOffset;
     int                     _iCurrentVisiblePage;
     NSMutableArray          *_arrTabButtons;
 }
