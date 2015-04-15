@@ -33,11 +33,28 @@
 @interface ADPageControl : UIViewController
 
 @property(readwrite) id<ADPageControlDelegate> delegateADPageControl;
-@property(readwrite) NSMutableArray *arrPageModel;
-@property(readwrite) int iFirstVisiblePageNumber;
-@property(readwrite) UIColor *colorTitleBarBackground;
-@property(readwrite) UIColor *colorTabText;
-@property(readwrite) UIColor *colorPageIndicator;
-@property(readwrite) UIColor *colorPageOverscrollBackground;
+
+//Data
+@property(readwrite) NSMutableArray *arrPageModel;//Only one compulsory parameter, rest all have default values
+
+//Initial visible page
+@property(readwrite) int            iFirstVisiblePageNumber;
+
+//Color theme
+@property(readwrite) UIColor        *colorTitleBarBackground;
+@property(readwrite) UIColor        *colorTabText;
+@property(readwrite) UIColor        *colorPageIndicator;
+@property(readwrite) UIColor        *colorPageOverscrollBackground;
+
+//UI Size related customisation
+@property(readwrite) int            iTitileViewHeight;
+@property(readwrite) int            iPageIndicatorHeight;
+@property(readwrite) UIFont         *fontTitleTabText;
+
+//Bounce effect on/off
+@property(readwrite) BOOL           bEnablePagesEndBounceEffect;
+@property(readwrite) BOOL           bEnableTitlesEndBounceEffect;
+
+
 
 @end

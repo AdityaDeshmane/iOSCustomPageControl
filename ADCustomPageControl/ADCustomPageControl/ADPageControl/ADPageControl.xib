@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ADPageControl">
             <connections>
+                <outlet property="constraintPageIndicatorHeight" destination="TGI-LG-teM" id="knL-bg-UVi"/>
                 <outlet property="constraintPageIndicatorLeading" destination="E0B-pj-xAE" id="pf1-np-dVA"/>
+                <outlet property="constraintPageIndicatorTop" destination="osd-ND-Qx5" id="IxF-8y-z1P"/>
                 <outlet property="constraintPageIndicotorWidth" destination="pml-6f-jVo" id="KyS-lN-dNS"/>
+                <outlet property="constraintTitleViewHeight" destination="Jlp-Uh-dGl" id="HVy-XI-MzE"/>
                 <outlet property="scrollViewTitle" destination="F1S-EG-OaR" id="xc9-yk-Rab"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewContainer" destination="VqO-id-aUg" id="rhH-BU-VD5"/>
+                <outlet property="viewLeftDummy" destination="pJi-aF-Zsd" id="GY2-GK-gJX"/>
                 <outlet property="viewPageIndicator" destination="7Af-Wo-wQ7" id="ZSo-KV-iPz"/>
             </connections>
         </placeholder>
@@ -20,28 +24,42 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1S-EG-OaR" userLabel="ScrollViewTitles">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1S-EG-OaR" userLabel="ScrollViewTitles">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
                     <subviews>
-                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Af-Wo-wQ7" userLabel="ViewPageIndicator">
-                            <rect key="frame" x="0.0" y="45" width="200" height="5"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Af-Wo-wQ7" userLabel="ViewPageIndicator">
+                            <rect key="frame" x="0.0" y="32" width="200" height="3"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="4" id="TGI-LG-teM" userLabel="ViewPageIndicatorHeight"/>
+                                <constraint firstAttribute="height" constant="3" id="TGI-LG-teM" userLabel="ViewPageIndicatorHeight"/>
                                 <constraint firstAttribute="width" constant="200" id="pml-6f-jVo" userLabel="ViewPageIndicatorWidth"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="7Af-Wo-wQ7" secondAttribute="bottom" id="BiY-AT-lcI" userLabel="ViewPageIndicatorBottom"/>
                         <constraint firstItem="7Af-Wo-wQ7" firstAttribute="leading" secondItem="F1S-EG-OaR" secondAttribute="leading" id="E0B-pj-xAE" userLabel="ViewPageIndicatorLeading"/>
-                        <constraint firstAttribute="height" constant="50" id="Jlp-Uh-dGl" userLabel="ScrollViewTitlesHeight"/>
+                        <constraint firstAttribute="height" constant="35" id="Jlp-Uh-dGl" userLabel="ScrollViewTitlesHeight"/>
+                        <constraint firstItem="7Af-Wo-wQ7" firstAttribute="top" secondItem="F1S-EG-OaR" secondAttribute="top" constant="32" id="osd-ND-Qx5" userLabel="ViewPageIndicatorTop"/>
                     </constraints>
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VqO-id-aUg" userLabel="ViewPageContainer">
-                    <rect key="frame" x="0.0" y="50" width="600" height="550"/>
+                    <rect key="frame" x="0.0" y="35" width="600" height="565"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJi-aF-Zsd" userLabel="ViewLeftDummy">
+                            <rect key="frame" x="0.0" y="0.0" width="4" height="565"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="4" id="RgC-XW-xBE" userLabel="viewLeftDummyWidth"/>
+                            </constraints>
+                        </view>
+                    </subviews>
                     <color key="backgroundColor" red="0.17751106676887923" green="0.0066359277296777052" blue="0.34838620580808077" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="pJi-aF-Zsd" secondAttribute="bottom" id="1jD-rH-XCG" userLabel="ViewLeftDummyBottom"/>
+                        <constraint firstItem="pJi-aF-Zsd" firstAttribute="leading" secondItem="VqO-id-aUg" secondAttribute="leading" id="6b9-ab-UPT" userLabel="ViewLeftDummyLeading"/>
+                        <constraint firstItem="pJi-aF-Zsd" firstAttribute="top" secondItem="VqO-id-aUg" secondAttribute="top" id="wMG-CZ-vk6" userLabel="ViewLeftDummyTop"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>

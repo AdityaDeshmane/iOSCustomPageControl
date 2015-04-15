@@ -24,8 +24,9 @@
 #import "ADPageControl.h"
 
 //Constants
-#define HUGE_WIDTH_VALUE 1500
-#define FONT [UIFont fontWithName:@"Helvetica-Bold" size:17]
+#define DEFAULT_TAB_TEXT_FONT [UIFont fontWithName:@"Helvetica" size:15]
+#define DEFAULT_PAGE_INDICATOR_HEIGHT 3
+#define DEFAULT_TITLE_VIEW_HEIGHT 35
 
 //Default colors
 #define DEFAULT_COLOR_TITLE_BAR_BACKGROUND [UIColor colorWithRed:51.0/255 green:0 blue:102.0/255 alpha:1.0]
@@ -33,27 +34,37 @@
 #define DEFAULT_COLOR_PAGE_INDICATOR [UIColor redColor]
 #define DEFAULT_COLOR_PAGE_OVERSCROLL_BACKGROUND [UIColor colorWithRed:45.0/255 green:2.0/255 blue:89.0/255 alpha:1.0]
 
-@interface ADPageControl ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate>
+//Tab button tag offset ( starting with tag zero will not work to check subview with tag, as default tag values are 0)
+#define TAB_BTN_TAG_OFFSET 300
+#define HUGE_WIDTH_VALUE 1500
+
+
+@interface ADPageControl ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate,UIScrollViewDelegate>
 {
-    UIPageViewController *_pageViewController;
-    NSMutableArray *_arrTabWidth;
-    int _iCurrentVisiblePage;
-    NSMutableArray *_arrTabButtons;
+    UIPageViewController    *_pageViewController;
+    NSMutableArray          *_arrTabWidth;
+    float                   _lastContentOffset;
+    int                     _iCurrentVisiblePage;
+    NSMutableArray          *_arrTabButtons;
 }
 
 //Outlets
-@property (strong, nonatomic) IBOutlet UIView *viewContainer;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollViewTitle;
-@property (strong, nonatomic) IBOutlet UIView *viewPageIndicator;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintPageIndicatorLeading;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *constraintPageIndicotorWidth;
+@property (strong, nonatomic) IBOutlet UIView               *viewContainer;
+@property (strong, nonatomic) IBOutlet UIScrollView         *scrollViewTitle;
+@property (strong, nonatomic) IBOutlet UIView               *viewPageIndicator;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorLeading;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicotorWidth;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintTitleViewHeight;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorTop;
+@property (strong, nonatomic) IBOutlet UIView               *viewLeftDummy;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorHeight;
 
 //Private methods
 -(void)setupPages;
--(void)setupTitles;
+-(void)setupTitleView;
 -(IBAction)tabPressed:(id)sender;
--(void)setPageIndicatorToPageNumber:(int) pageNumber andShouldHighlightCurrentPage:(BOOL) shouldHighlight;
-
+-(void)setPageIndicatorToPageNumber:(int) pageNumber
+      andShouldHighlightCurrentPage:(BOOL) shouldHighlight;
 @end
 
 @implementation ADPageControl
@@ -64,16 +75,19 @@
     // Do any additional setup after loading the view from its nib.
     
     [self setupPages];
-    [self setupTitles];
+    [self setupTitleView];
     [self setPageIndicatorToPageNumber:_iFirstVisiblePageNumber andShouldHighlightCurrentPage:YES];
+    [_viewContainer bringSubviewToFront:_viewLeftDummy];
+    [self enablePagesEndBounceEffect:_bEnablePagesEndBounceEffect];
+    _scrollViewTitle.bounces = _bEnableTitlesEndBounceEffect;
 }
 
 #pragma mark - Initialization methods
 
 -(void)setupPages
 {
-    if(_iFirstVisiblePageNumber >= _arrPageModel.count)
-        _iFirstVisiblePageNumber = 0 ;
+   if(_iFirstVisiblePageNumber >= _arrPageModel.count)
+       _iFirstVisiblePageNumber = 0 ;
     
     _iCurrentVisiblePage = _iFirstVisiblePageNumber;
     
@@ -94,17 +108,36 @@
     [_viewContainer setBackgroundColor:_colorPageOverscrollBackground ? _colorPageOverscrollBackground : DEFAULT_COLOR_PAGE_OVERSCROLL_BACKGROUND];
 }
 
--(void)setupTitles
+-(void)setupTitleView
 {
+    if(!_fontTitleTabText)
+    {
+        _fontTitleTabText = DEFAULT_TAB_TEXT_FONT;
+    }
+    
+    if(_iPageIndicatorHeight <= 0)
+    {
+        _iPageIndicatorHeight = DEFAULT_PAGE_INDICATOR_HEIGHT;
+    }
+    
+    if(_iTitileViewHeight <= 0)
+    {
+        _iTitileViewHeight = DEFAULT_TITLE_VIEW_HEIGHT;
+    }
+    
+    _constraintPageIndicatorHeight.constant = _iPageIndicatorHeight;
+    _constraintTitleViewHeight.constant = _iTitileViewHeight;
+    _constraintPageIndicatorTop.constant = _iTitileViewHeight - _iPageIndicatorHeight;
+    
     [self setWidthArray];
     
     [_scrollViewTitle setBackgroundColor:_colorTitleBarBackground ? _colorTitleBarBackground : DEFAULT_COLOR_TITLE_BAR_BACKGROUND];
     [_viewPageIndicator setBackgroundColor:_colorPageIndicator ? _colorPageIndicator : DEFAULT_COLOR_PAGE_INDICATOR];
     UIColor *buttonTextColor = _colorTabText ? _colorTabText : DEFAULT_COLOR_TAB_TEXT;
     
-    int parentHeight = _scrollViewTitle.frame.size.height;
+    int parentHeight = _constraintTitleViewHeight.constant;
     int numberOfTabs = (int)_arrPageModel.count;
-    int btnTagOffset = 300;
+    int btnTagOffset = TAB_BTN_TAG_OFFSET;
     
     _arrTabButtons = [[NSMutableArray alloc] init];
     
@@ -116,7 +149,7 @@
         [button setTranslatesAutoresizingMaskIntoConstraints:NO];
         [button setTitle:pageModel.strPageTitle forState:UIControlStateNormal];
         [button setTitleColor:buttonTextColor forState:UIControlStateNormal];
-        [button.titleLabel setFont:FONT];
+        [button.titleLabel setFont:_fontTitleTabText];
         [button setTag:btnTagOffset + index];
         [button addTarget:self action:@selector(tabPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_arrTabButtons addObject:button];
@@ -192,7 +225,7 @@
 {
     _arrTabWidth = [[NSMutableArray alloc] init];
     
-    //Label width calculation
+    //button width calculation
     float expectedLabelWidth = 0;
     float requiredHeight = _scrollViewTitle.frame.size.height -20;
     
@@ -205,21 +238,21 @@
         {
             expectedLabelWidth= [textString boundingRectWithSize:CGSizeMake(HUGE_WIDTH_VALUE,requiredHeight)
                                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                                      attributes:@{NSFontAttributeName:FONT}
+                                                      attributes:@{NSFontAttributeName:_fontTitleTabText}
                                                          context:nil].size.width;
         }
         else//iOS 6 and below
         {
             //Dont worry about warnings, this code will execute only for iOS 6 & below
             CGSize constraintSize = CGSizeMake(HUGE_WIDTH_VALUE, requiredHeight);
-            expectedLabelWidth = [textString sizeWithFont:FONT
+            expectedLabelWidth = [textString sizeWithFont:_fontTitleTabText
                                         constrainedToSize:constraintSize
                                             lineBreakMode:UILineBreakModeWordWrap].width;
         }
         
         [_arrTabWidth addObject:[NSNumber numberWithFloat:expectedLabelWidth+30]];
         
-        NSLog(@"TAB %d width : %f",index, expectedLabelWidth);
+        NSLog(@"ADPageControl :: TAB %d width : %f",index, expectedLabelWidth);
     }
 }
 
@@ -233,8 +266,19 @@
     {
         fLeading = fLeading + [[_arrTabWidth objectAtIndex:index] floatValue];
     }
-    
-    [_scrollViewTitle scrollRectToVisible:CGRectMake(fLeading, 0, fWidth, 10) animated:YES];
+
+    //Works similar to scrollRectToVisible:
+    [UIView animateWithDuration:0.3 animations:
+     ^{
+        if(fLeading < _scrollViewTitle.contentOffset.x )
+        {
+            _scrollViewTitle.contentOffset = CGPointMake(fLeading, 0);
+        }
+        else if((fLeading + fWidth )> (_scrollViewTitle.contentOffset.x + _scrollViewTitle.frame.size.width))
+        {
+            _scrollViewTitle.contentOffset = CGPointMake(fLeading + fWidth - (_scrollViewTitle.frame.size.width), 0);
+        }
+    }];
     
     [UIView animateWithDuration:0.2 animations:
      ^{
@@ -258,28 +302,81 @@
     }
 }
 
+#pragma mark - Bounce Customization
+
+-(void)enablePagesEndBounceEffect:(BOOL) bShouldEnable
+{
+    _bEnablePagesEndBounceEffect = bShouldEnable;
+    
+    if(_bEnablePagesEndBounceEffect == NO)
+    {
+        for (UIView *view in _pageViewController.view.subviews )
+        {
+            if ([view isKindOfClass:[UIScrollView class]])
+            {
+                UIScrollView *scroll = (UIScrollView *)view;
+                scroll.delegate = self;
+                break;
+            }
+        }
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_bEnablePagesEndBounceEffect == NO)
+    {
+        if (_iCurrentVisiblePage == 0 && scrollView.contentOffset.x < scrollView.bounds.size.width)
+        {
+            scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+        }
+        
+        if (_iCurrentVisiblePage == [_arrPageModel count]-1 && scrollView.contentOffset.x > scrollView.bounds.size.width)
+        {
+            scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+        }
+    }
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    if (_bEnablePagesEndBounceEffect == NO)
+    {
+        if (_iCurrentVisiblePage == 0 && scrollView.contentOffset.x <= scrollView.bounds.size.width)
+        {
+            velocity = CGPointZero;
+            *targetContentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+        }
+        
+        if (_iCurrentVisiblePage == [_arrPageModel count]-1 && scrollView.contentOffset.x >= scrollView.bounds.size.width)
+        {
+            velocity = CGPointZero;
+            *targetContentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+        }
+    }
+}
+
+
 #pragma mark - IBActions
 
 -(IBAction)tabPressed:(id)sender
 {
     UIButton *btn = (UIButton*) sender;
-    int iPageNumber = (int)btn.tag - 300;
+    int iPageNumber = (int)btn.tag - TAB_BTN_TAG_OFFSET;
     
-    NSLog(@"Tab : %d pressed",iPageNumber );
-    
+    NSLog(@"ADPageControl :: Tab : %d pressed",iPageNumber );
+
     dispatch_async(dispatch_get_main_queue(),
-                   ^{
-                       
-                       ADPageModel *pageModel = [_arrPageModel objectAtIndex:iPageNumber];
-                       //animate to next page
-                       [_pageViewController setViewControllers:@[[self getViewControllerForPageModel:pageModel]]
-                                                     direction: (_iCurrentVisiblePage < iPageNumber) ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse
-                                                      animated:YES
-                                                    completion:^(BOOL finished){}];
-                       
-                       [self setPageIndicatorToPageNumber:iPageNumber andShouldHighlightCurrentPage:YES];
-                       
-                   });
+   ^{
+       ADPageModel *pageModel = [_arrPageModel objectAtIndex:iPageNumber];
+       //animate to next page
+       [_pageViewController setViewControllers:@[[self getViewControllerForPageModel:pageModel]]
+                                     direction: (_iCurrentVisiblePage < iPageNumber) ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse
+                                      animated:NO
+                                    completion:^(BOOL finished){}];
+       
+       [self setPageIndicatorToPageNumber:iPageNumber andShouldHighlightCurrentPage:YES];
+   });
 }
 
 
@@ -318,10 +415,9 @@
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
     int pageNumber = [self getPageNumberForViewController:[pendingViewControllers lastObject]];
-    NSLog(@"About to make transition to page number : %d",pageNumber);
-    
+    NSLog(@"ADPageControl :: About to make transition to page number : %d",pageNumber);
+
     [self setPageIndicatorToPageNumber:pageNumber andShouldHighlightCurrentPage:NO];
-    
 }
 
 - (void)pageViewController:(UIPageViewController *)pvc didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
@@ -330,8 +426,8 @@
     {
         int pageNumber = [self getPageNumberForViewController:[_pageViewController.viewControllers lastObject]];
         
-        NSLog(@"Current visible page number : %d",pageNumber);
         [self setPageIndicatorToPageNumber:pageNumber andShouldHighlightCurrentPage:YES];
+        NSLog(@"ADPageControl :: Current visible page number : %d",pageNumber);
     }
     else
     {
@@ -358,7 +454,6 @@
     return  pageNumber;
 }
 
-
 -(UIViewController *)getViewControllerForPageModel:(ADPageModel *) pageModel
 {
     if(pageModel.bShouldLazyLoad && pageModel.viewController == nil)
@@ -367,10 +462,9 @@
         {
             pageModel.viewController = [_delegateADPageControl getViewControllerForPageModel:pageModel];
             pageModel.bShouldLazyLoad = NO;
+            [_arrPageModel replaceObjectAtIndex:pageModel.iPageNumber withObject:pageModel];
         }
     }
-    
-    [_arrPageModel replaceObjectAtIndex:pageModel.iPageNumber withObject:pageModel];
     
     return pageModel.viewController;
 }

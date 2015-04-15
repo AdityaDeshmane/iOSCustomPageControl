@@ -27,9 +27,9 @@
 
 @interface ADPageModel : NSObject
 
-@property(readwrite) int iPageNumber;
-@property(readwrite) NSString *strPageTitle;
-@property(readwrite) UIViewController *viewController;
-@property(readwrite) BOOL bShouldLazyLoad;
+@property(readwrite) int                iPageNumber;
+@property(readwrite) NSString           *strPageTitle;
+@property(readwrite) UIViewController   *viewController;
+@property(readwrite) BOOL               bShouldLazyLoad;
 
 @end

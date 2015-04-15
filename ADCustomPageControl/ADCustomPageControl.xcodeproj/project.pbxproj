@@ -16,7 +16,6 @@
 		B2CB343C1AC3FD3700F525E0 /* ADCustomPageControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB343B1AC3FD3700F525E0 /* ADCustomPageControlTests.m */; };
 		B2CB34491AC3FD7D00F525E0 /* ADPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB34471AC3FD7D00F525E0 /* ADPageControl.m */; };
 		B2CB344A1AC3FD7D00F525E0 /* ADPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2CB34481AC3FD7D00F525E0 /* ADPageControl.xib */; };
-		B2CB344D1AC3FFC200F525E0 /* PageItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB344C1AC3FFC200F525E0 /* PageItemController.m */; };
 		B2CB34501AC40CB300F525E0 /* ADPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB344F1AC40CB300F525E0 /* ADPageModel.m */; };
 /* End PBXBuildFile section */
 
@@ -47,8 +46,6 @@
 		B2CB34461AC3FD7D00F525E0 /* ADPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADPageControl.h; sourceTree = "<group>"; };
 		B2CB34471AC3FD7D00F525E0 /* ADPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADPageControl.m; sourceTree = "<group>"; };
 		B2CB34481AC3FD7D00F525E0 /* ADPageControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADPageControl.xib; sourceTree = "<group>"; };
-		B2CB344B1AC3FFC200F525E0 /* PageItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageItemController.h; sourceTree = "<group>"; };
-		B2CB344C1AC3FFC200F525E0 /* PageItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageItemController.m; sourceTree = "<group>"; };
 		B2CB344E1AC40CB300F525E0 /* ADPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADPageModel.h; sourceTree = "<group>"; };
 		B2CB344F1AC40CB300F525E0 /* ADPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADPageModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,8 +93,6 @@
 				B2CB34231AC3FD3600F525E0 /* AppDelegate.h */,
 				B2CB34241AC3FD3600F525E0 /* AppDelegate.m */,
 				B2CB34261AC3FD3600F525E0 /* ViewController.h */,
-				B2CB344B1AC3FFC200F525E0 /* PageItemController.h */,
-				B2CB344C1AC3FFC200F525E0 /* PageItemController.m */,
 				B2CB34271AC3FD3600F525E0 /* ViewController.m */,
 				B2CB34291AC3FD3600F525E0 /* Main.storyboard */,
 				B2CB342C1AC3FD3600F525E0 /* Images.xcassets */,
@@ -246,7 +241,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2CB344D1AC3FFC200F525E0 /* PageItemController.m in Sources */,
 				B2CB34281AC3FD3600F525E0 /* ViewController.m in Sources */,
 				B2CB34491AC3FD7D00F525E0 /* ADPageControl.m in Sources */,
 				B2CB34501AC40CB300F525E0 /* ADPageModel.m in Sources */,
