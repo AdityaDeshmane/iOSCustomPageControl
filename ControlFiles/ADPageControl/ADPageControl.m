@@ -45,6 +45,7 @@
     NSMutableArray          *_arrTabWidth;
     int                     _iCurrentVisiblePage;
     NSMutableArray          *_arrTabButtons;
+    UIScrollView            *_scrollViewPageController;
 }
 
 //Outlets
@@ -56,6 +57,10 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintTitleViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorTop;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorHeight;
+@property (weak, nonatomic) IBOutlet UIView *viewIndicatorMoreTitlesToLeft;
+@property (weak, nonatomic) IBOutlet UIView *viewIndicatorMoreTitlesToRight;
+
+
 
 //Many apps nowadays use drawer control,
 //this 4 pixel width dummy views at both edges disables touches on edges in order to open drawer on edge swipe
@@ -65,11 +70,17 @@
 @property (strong, nonatomic) IBOutlet UIView               *viewRightDummy;
 
 //Private methods
--(void)setupPages;
+-(void)validateFirstVisiblePageNumber;
+-(void)setupIndicatorViewMoreTitleToLeftRight;
+-(void)initializeTitleViewParameters;
+-(void)setTabWidthArray;
 -(void)setupTitleView;
--(IBAction)tabPressed:(id)sender;
+-(void)setupPages;
 -(void)setPageIndicatorToPageNumber:(int) pageNumber
       andShouldHighlightCurrentPage:(BOOL) shouldHighlight;
+-(void)setBounceParameters;
+-(IBAction)tabPressed:(id)sender;
+
 @end
 
 @implementation ADPageControl
@@ -79,42 +90,37 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self setupPages];
+    [self validateFirstVisiblePageNumber];
+    [self setupIndicatorViewMoreTitleToLeftRight];
+    [self initializeTitleViewParameters];
+    [self setTabWidthArray];
     [self setupTitleView];
+    [self setupPages];
     [self setPageIndicatorToPageNumber:_iFirstVisiblePageNumber andShouldHighlightCurrentPage:YES];
-    [_viewContainer bringSubviewToFront:_viewLeftDummy];
-    [_viewContainer bringSubviewToFront:_viewRightDummy];
-    [self enablePagesEndBounceEffect:_bEnablePagesEndBounceEffect];
-    _scrollViewTitle.bounces = _bEnableTitlesEndBounceEffect;
+    [self setBounceParameters];
 }
 
 #pragma mark - Initialization methods
 
--(void)setupPages
+-(void)validateFirstVisiblePageNumber
 {
-   if(_iFirstVisiblePageNumber >= _arrPageModel.count)
-       _iFirstVisiblePageNumber = 0 ;
+    if(_iFirstVisiblePageNumber >= _arrPageModel.count)
+        _iFirstVisiblePageNumber = 0 ;
     
     _iCurrentVisiblePage = _iFirstVisiblePageNumber;
-    
-    _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                                                          navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                        options:nil];
-    _pageViewController.dataSource = self;
-    _pageViewController.delegate = self ;
-    ADPageModel *firstVisiblePage = [_arrPageModel objectAtIndex:_iFirstVisiblePageNumber];
-    
-    [_pageViewController setViewControllers:[NSArray arrayWithObject:[self getViewControllerForPageModel:firstVisiblePage]]
-                                  direction:UIPageViewControllerNavigationDirectionForward
-                                   animated:NO
-                                 completion:nil];
-    
-    [_viewContainer addSubview:_pageViewController.view];
-    [_pageViewController.view setFrame:_viewContainer.bounds];
-    [_viewContainer setBackgroundColor:_colorPageOverscrollBackground ? _colorPageOverscrollBackground : DEFAULT_COLOR_PAGE_OVERSCROLL_BACKGROUND];
 }
 
--(void)setupTitleView
+-(void)setupIndicatorViewMoreTitleToLeftRight
+{
+    if(_bShowMoreTabAvailableIndicator)
+    {
+        _scrollViewTitle.delegate = self;
+        [self.view bringSubviewToFront:_viewIndicatorMoreTitlesToLeft];
+        [self.view bringSubviewToFront:_viewIndicatorMoreTitlesToRight];
+    }
+}
+
+-(void)initializeTitleViewParameters
 {
     if(!_fontTitleTabText)
     {
@@ -135,99 +141,102 @@
     _constraintTitleViewHeight.constant = _iTitileViewHeight;
     _constraintPageIndicatorTop.constant = _iTitileViewHeight - _iPageIndicatorHeight;
     
-    [self setWidthArray];
-    
     [_scrollViewTitle setBackgroundColor:_colorTitleBarBackground ? _colorTitleBarBackground : DEFAULT_COLOR_TITLE_BAR_BACKGROUND];
     [_viewPageIndicator setBackgroundColor:_colorPageIndicator ? _colorPageIndicator : DEFAULT_COLOR_PAGE_INDICATOR];
-    UIColor *buttonTextColor = _colorTabText ? _colorTabText : DEFAULT_COLOR_TAB_TEXT;
-    
-    int parentHeight = _constraintTitleViewHeight.constant;
-    int numberOfTabs = (int)_arrPageModel.count;
-    int btnTagOffset = TAB_BTN_TAG_OFFSET;
-    
     _arrTabButtons = [[NSMutableArray alloc] init];
-    
-    for(int index = 0; index < numberOfTabs; index++ )
+}
+
+-(void)setupTitleView
+{
+    //Adding buttons to scrollview
+    for(int index = 0; index < _arrPageModel.count; index++ )
     {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        
         ADPageModel *pageModel = [_arrPageModel objectAtIndex:index];
         [button setTranslatesAutoresizingMaskIntoConstraints:NO];
         [button setTitle:pageModel.strPageTitle forState:UIControlStateNormal];
-        [button setTitleColor:buttonTextColor forState:UIControlStateNormal];
+        [button setTitleColor:_colorTabText ? _colorTabText : DEFAULT_COLOR_TAB_TEXT forState:UIControlStateNormal];
         [button.titleLabel setFont:_fontTitleTabText];
-        [button setTag:btnTagOffset + index];
+        [button setTag:TAB_BTN_TAG_OFFSET + index];
         [button addTarget:self action:@selector(tabPressed:) forControlEvents:UIControlEventTouchUpInside];
         [_arrTabButtons addObject:button];
         [_scrollViewTitle addSubview:button];
+        [self addConstraintsToTabButtonAtIndex:index];
+    }
+}
+
+-(void)addConstraintsToTabButtonAtIndex:(int)index
+{
+    UIButton *button  = [_arrTabButtons objectAtIndex:index];
+    int parentScrollViewHeight = _constraintTitleViewHeight.constant;
+    int numberOfTabs = (int)_arrPageModel.count;
+
+    //WIDTH
+    NSString *strWidth = [NSString stringWithFormat:@"H:[button(==%f)]",[[_arrTabWidth objectAtIndex:index] floatValue]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:strWidth
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
+    
+    //HEIGHT
+    NSString *strHeight = [NSString stringWithFormat:@"V:[button(==%d)]",parentScrollViewHeight];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:strHeight
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
+    
+    //TOP SPACE
+    NSLayoutConstraint *constraintTopSpace = [NSLayoutConstraint constraintWithItem:button
+                                                                          attribute:NSLayoutAttributeTop
+                                                                          relatedBy:NSLayoutRelationEqual
+                                                                             toItem:_scrollViewTitle
+                                                                          attribute:NSLayoutAttributeTop
+                                                                         multiplier:1.0f
+                                                                           constant:0.0f];
+    [_scrollViewTitle addConstraint:constraintTopSpace];
+    
+    if(index == 0)//first tab
+    {
+        //LEADING SPACE
+        NSLayoutConstraint *constraintLeadingSpace = [NSLayoutConstraint constraintWithItem:button
+                                                                                  attribute:NSLayoutAttributeLeading
+                                                                                  relatedBy:NSLayoutRelationEqual
+                                                                                     toItem:_scrollViewTitle
+                                                                                  attribute:NSLayoutAttributeLeading
+                                                                                 multiplier:1.0f
+                                                                                   constant:0.0f];
+        [_scrollViewTitle addConstraint:constraintLeadingSpace];
+    }
+    else//middle tabs
+    {
+        //HORIZONTAL SPACING
+        UIButton *previousButton = (UIButton*)[_scrollViewTitle viewWithTag:TAB_BTN_TAG_OFFSET + (index -1)];
         
-        //WIDTH
-        NSString *strWidth = [NSString stringWithFormat:@"H:[button(==%f)]",[[_arrTabWidth objectAtIndex:index] floatValue]];
-        [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:strWidth
-                                                                       options:0
-                                                                       metrics:nil
-                                                                         views:NSDictionaryOfVariableBindings(button)]];
+        NSLayoutConstraint *constraintHorizontalSpace = [NSLayoutConstraint constraintWithItem:previousButton
+                                                                                     attribute:NSLayoutAttributeTrailing
+                                                                                     relatedBy:NSLayoutRelationEqual
+                                                                                        toItem:button
+                                                                                     attribute:NSLayoutAttributeLeading
+                                                                                    multiplier:1.0f
+                                                                                      constant:0.0f];
+        [_scrollViewTitle addConstraint:constraintHorizontalSpace];
         
-        //HEIGHT
-        NSString *strHeight = [NSString stringWithFormat:@"V:[button(==%d)]",parentHeight];
-        [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:strHeight
-                                                                       options:0
-                                                                       metrics:nil
-                                                                         views:NSDictionaryOfVariableBindings(button)]];
-        
-        //TOP SPACE
-        NSLayoutConstraint *constraintTopSpace = [NSLayoutConstraint constraintWithItem:button
-                                                                              attribute:NSLayoutAttributeTop
-                                                                              relatedBy:NSLayoutRelationEqual
-                                                                                 toItem:_scrollViewTitle
-                                                                              attribute:NSLayoutAttributeTop
-                                                                             multiplier:1.0f
-                                                                               constant:0.0f];
-        [_scrollViewTitle addConstraint:constraintTopSpace];
-        
-        if(index == 0)//first tab
+        if(index == (numberOfTabs-1))//last tab
         {
-            //LEADING SPACE
-            NSLayoutConstraint *constraintLeadingSpace = [NSLayoutConstraint constraintWithItem:button
-                                                                                      attribute:NSLayoutAttributeLeading
-                                                                                      relatedBy:NSLayoutRelationEqual
-                                                                                         toItem:_scrollViewTitle
-                                                                                      attribute:NSLayoutAttributeLeading
-                                                                                     multiplier:1.0f
-                                                                                       constant:0.0f];
-            [_scrollViewTitle addConstraint:constraintLeadingSpace];
-        }
-        else//middle tabs
-        {
-            //HORIZONTAL SPACING
-            UIButton *previousButton = (UIButton*)[_scrollViewTitle viewWithTag:btnTagOffset + (index -1)];
-            
-            NSLayoutConstraint *constraintHorizontalSpace = [NSLayoutConstraint constraintWithItem:previousButton
-                                                                                         attribute:NSLayoutAttributeTrailing
-                                                                                         relatedBy:NSLayoutRelationEqual
-                                                                                            toItem:button
-                                                                                         attribute:NSLayoutAttributeLeading
-                                                                                        multiplier:1.0f
-                                                                                          constant:0.0f];
-            [_scrollViewTitle addConstraint:constraintHorizontalSpace];
-            
-            if(index == (numberOfTabs-1))//last tab
-            {
-                //TRAILING SPACE
-                NSLayoutConstraint *constraintTrailingSpace = [NSLayoutConstraint constraintWithItem:button
-                                                                                           attribute:NSLayoutAttributeTrailing
-                                                                                           relatedBy:NSLayoutRelationEqual
-                                                                                              toItem:_scrollViewTitle
-                                                                                           attribute:NSLayoutAttributeTrailing
-                                                                                          multiplier:1.0f
-                                                                                            constant:0.0f];
-                [_scrollViewTitle addConstraint:constraintTrailingSpace];
-            }
+            //TRAILING SPACE
+            NSLayoutConstraint *constraintTrailingSpace = [NSLayoutConstraint constraintWithItem:button
+                                                                                       attribute:NSLayoutAttributeTrailing
+                                                                                       relatedBy:NSLayoutRelationEqual
+                                                                                          toItem:_scrollViewTitle
+                                                                                       attribute:NSLayoutAttributeTrailing
+                                                                                      multiplier:1.0f
+                                                                                        constant:0.0f];
+            [_scrollViewTitle addConstraint:constraintTrailingSpace];
         }
     }
 }
 
--(void)setWidthArray
+-(void)setTabWidthArray
 {
     _arrTabWidth = [[NSMutableArray alloc] init];
     
@@ -262,6 +271,25 @@
     }
 }
 
+-(void)setupPages
+{
+    _pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                          navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                        options:nil];
+    _pageViewController.dataSource = self;
+    _pageViewController.delegate = self ;
+    ADPageModel *firstVisiblePage = [_arrPageModel objectAtIndex:_iFirstVisiblePageNumber];
+    
+    [_pageViewController setViewControllers:[NSArray arrayWithObject:[self getViewControllerForPageModel:firstVisiblePage]]
+                                  direction:UIPageViewControllerNavigationDirectionForward
+                                   animated:NO
+                                 completion:nil];
+    
+    [_viewContainer addSubview:_pageViewController.view];
+    [_pageViewController.view setFrame:_viewContainer.bounds];
+    [_viewContainer setBackgroundColor:_colorPageOverscrollBackground ? _colorPageOverscrollBackground : DEFAULT_COLOR_PAGE_OVERSCROLL_BACKGROUND];
+}
+
 
 -(void)setPageIndicatorToPageNumber:(int) pageNumber andShouldHighlightCurrentPage:(BOOL) bShouldHighlight
 {
@@ -274,7 +302,8 @@
     }
 
     //Works similar to scrollRectToVisible:
-    [UIView animateWithDuration:0.3 animations:
+    [UIView animateWithDuration:0.3
+     animations:
      ^{
         if(fLeading < _scrollViewTitle.contentOffset.x )
         {
@@ -284,7 +313,12 @@
         {
             _scrollViewTitle.contentOffset = CGPointMake(fLeading + fWidth - (_scrollViewTitle.frame.size.width), 0);
         }
-    }];
+     }
+     completion:^(BOOL finished)
+     {
+         [self updateMoreTabAvailableIndicator];
+     }
+    ];
     
     [UIView animateWithDuration:0.2 animations:
      ^{
@@ -305,7 +339,20 @@
         
         UIButton *currentTabButton = [_arrTabButtons objectAtIndex:_iCurrentVisiblePage];
         currentTabButton.alpha = 1.0;
+        
+        if(_delegateADPageControl && [_delegateADPageControl respondsToSelector:@selector(adPageControlCurrentVisiblePageIndex:)])
+        {
+            [_delegateADPageControl adPageControlCurrentVisiblePageIndex:_iCurrentVisiblePage];
+        }
     }
+}
+
+-(void)setBounceParameters
+{
+    [_viewContainer bringSubviewToFront:_viewLeftDummy];
+    [_viewContainer bringSubviewToFront:_viewRightDummy];
+    [self enablePagesEndBounceEffect:_bEnablePagesEndBounceEffect];
+    _scrollViewTitle.bounces = _bEnableTitlesEndBounceEffect;
 }
 
 #pragma mark - Bounce Customization
@@ -320,8 +367,8 @@
         {
             if ([view isKindOfClass:[UIScrollView class]])
             {
-                UIScrollView *scroll = (UIScrollView *)view;
-                scroll.delegate = self;
+                _scrollViewPageController = (UIScrollView *)view;
+                _scrollViewPageController.delegate = self;
                 break;
             }
         }
@@ -330,34 +377,66 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (_bEnablePagesEndBounceEffect == NO)
+    if(_scrollViewTitle == scrollView)
     {
-        if (_iCurrentVisiblePage == 0 && scrollView.contentOffset.x < scrollView.bounds.size.width)
+        [self updateMoreTabAvailableIndicator];
+    }
+    else if(_scrollViewPageController == scrollView)
+    {
+        if (_bEnablePagesEndBounceEffect == NO)
         {
-            scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+            if (_iCurrentVisiblePage == 0 && scrollView.contentOffset.x < scrollView.bounds.size.width)
+            {
+                scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+            }
+            
+            if (_iCurrentVisiblePage == [_arrPageModel count]-1 && scrollView.contentOffset.x > scrollView.bounds.size.width)
+            {
+                scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+            }
         }
-        
-        if (_iCurrentVisiblePage == [_arrPageModel count]-1 && scrollView.contentOffset.x > scrollView.bounds.size.width)
-        {
-            scrollView.contentOffset = CGPointMake(scrollView.bounds.size.width, 0);
-        }
+    }
+}
+
+-(void)updateMoreTabAvailableIndicator
+{
+    if(_bShowMoreTabAvailableIndicator == NO)
+        return;
+    
+    _viewIndicatorMoreTitlesToLeft.hidden = YES;
+    _viewIndicatorMoreTitlesToRight.hidden = YES;
+    
+    if(_scrollViewTitle.contentOffset.x > 0 && _iCurrentVisiblePage != 0)
+    {
+        _viewIndicatorMoreTitlesToLeft.hidden = NO;
+    }
+    
+    
+    
+    if( (_scrollViewTitle.contentOffset.x  + _scrollViewTitle.bounds.size.width ) < _scrollViewTitle.contentSize.width &&
+       _iCurrentVisiblePage != _arrPageModel.count - 1)
+    {
+        _viewIndicatorMoreTitlesToRight.hidden = NO;
     }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset
 {
-    if (_bEnablePagesEndBounceEffect == NO)
+   if(_scrollViewPageController == scrollView)
     {
-        if (_iCurrentVisiblePage == 0 && scrollView.contentOffset.x <= scrollView.bounds.size.width)
+        if (_bEnablePagesEndBounceEffect == NO)
         {
-            velocity = CGPointZero;
-            *targetContentOffset = CGPointMake(scrollView.bounds.size.width, 0);
-        }
-        
-        if (_iCurrentVisiblePage == [_arrPageModel count]-1 && scrollView.contentOffset.x >= scrollView.bounds.size.width)
-        {
-            velocity = CGPointZero;
-            *targetContentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+            if (_iCurrentVisiblePage == 0 && scrollView.contentOffset.x <= scrollView.bounds.size.width)
+            {
+                velocity = CGPointZero;
+                *targetContentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+            }
+            
+            if (_iCurrentVisiblePage == [_arrPageModel count]-1 && scrollView.contentOffset.x >= scrollView.bounds.size.width)
+            {
+                velocity = CGPointZero;
+                *targetContentOffset = CGPointMake(scrollView.bounds.size.width, 0);
+            }
         }
     }
 }
@@ -433,7 +512,6 @@
         int pageNumber = [self getPageNumberForViewController:[_pageViewController.viewControllers lastObject]];
         
         [self setPageIndicatorToPageNumber:pageNumber andShouldHighlightCurrentPage:YES];
-        NSLog(@"ADPageControl :: Current visible page number : %d",pageNumber);
     }
     else
     {
@@ -464,15 +542,16 @@
 {
     if(pageModel.bShouldLazyLoad && pageModel.viewController == nil)
     {
-        if(_delegateADPageControl && [_delegateADPageControl respondsToSelector:@selector(getViewControllerForPageModel:)])
+        if(_delegateADPageControl && [_delegateADPageControl respondsToSelector:@selector(adPageControlGetViewControllerForPageModel:)])
         {
-            pageModel.viewController = [_delegateADPageControl getViewControllerForPageModel:pageModel];
+            UIViewController *viewController = [_delegateADPageControl adPageControlGetViewControllerForPageModel:pageModel];
+            pageModel.viewController = viewController  ? viewController : [UIViewController new] ;
             pageModel.bShouldLazyLoad = NO;
             [_arrPageModel replaceObjectAtIndex:pageModel.iPageNumber withObject:pageModel];
         }
     }
     
-    return pageModel.viewController;
+    return pageModel.viewController ? pageModel.viewController : [UIViewController new];
 }
 
 

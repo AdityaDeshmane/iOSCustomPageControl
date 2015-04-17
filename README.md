@@ -32,6 +32,10 @@ Customisation parameters
 //Bounce effect on/off
 @property(readwrite) BOOL           bEnablePagesEndBounceEffect;
 @property(readwrite) BOOL           bEnableTitlesEndBounceEffect;
+
+//Title tabview show indicator when more tabs available to left/right
+@property(readwrite) BOOL           bShowMoreTabAvailableIndicator;
+
 ```
 
 <em>This UI control can be used on all iPhones, iPods & iPads running iOS 6.0 and above.</em>
@@ -123,6 +127,9 @@ Customisation parameters
     _pageControl.colorTitleBarBackground = [UIColor purpleColor];
     _pageControl.colorPageIndicator = [UIColor whiteColor];
     _pageControl.colorPageOverscrollBackground = [UIColor darkGrayColor];
+	
+    _pageControl.bShowMoreTabAvailableIndicator = NO;
+	
 ```
 
 ```obj-c
@@ -187,7 +194,6 @@ Customisation parameters
 
 * Component polishing
 * More generalizations
-* Show indicator to left and right end of title bar when more pages are available
 
 ---
 ---

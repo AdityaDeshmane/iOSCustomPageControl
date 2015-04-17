@@ -26,7 +26,9 @@
 
 @protocol ADPageControlDelegate <NSObject>
 
--(UIViewController *)getViewControllerForPageModel:(ADPageModel *) pageModel;
+@optional
+-(UIViewController *)adPageControlGetViewControllerForPageModel:(ADPageModel *) pageModel;
+-(void)adPageControlCurrentVisiblePageIndex:(int) iCurrentVisiblePage;
 
 @end
 
@@ -55,6 +57,8 @@
 @property(readwrite) BOOL           bEnablePagesEndBounceEffect;
 @property(readwrite) BOOL           bEnableTitlesEndBounceEffect;
 
+//Title tabview show indicator when more tabs available to left/right
+@property(readwrite) BOOL           bShowMoreTabAvailableIndicator;
 
 
 @end

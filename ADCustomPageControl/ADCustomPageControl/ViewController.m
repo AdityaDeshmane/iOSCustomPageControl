@@ -99,9 +99,9 @@
     _pageControl.colorTabText = [UIColor whiteColor];
     _pageControl.colorTitleBarBackground = [UIColor purpleColor];
     _pageControl.colorPageIndicator = [UIColor whiteColor];
-    _pageControl.colorPageOverscrollBackground = [UIColor darkGrayColor];
+    _pageControl.colorPageOverscrollBackground = [UIColor lightGrayColor];
     
-    
+    _pageControl.bShowMoreTabAvailableIndicator = NO;
     
     /**** 3. Add as subview ****/
     
@@ -109,9 +109,11 @@
     [self.view addSubview:_pageControl.view];
 }
 
-#pragma mark - ADPageControlDelegate LazyLoading
+#pragma mark - ADPageControlDelegate 
 
--(UIViewController *)getViewControllerForPageModel:(ADPageModel *) pageModel
+//LAZY LOADING
+
+-(UIViewController *)adPageControlGetViewControllerForPageModel:(ADPageModel *) pageModel
 {
     NSLog(@"ADPageControl :: Lazy load asking for page %d",pageModel.iPageNumber);
     
@@ -138,6 +140,13 @@
     }
     
     return nil;
+}
+
+//CURRENT PAGE INDEX
+
+-(void)adPageControlCurrentVisiblePageIndex:(int) iCurrentVisiblePage
+{
+    NSLog(@"ADPageControl :: Current visible page index : %d",iCurrentVisiblePage);
 }
 
 @end
