@@ -89,7 +89,7 @@
     /**** 3. Customize parameters (Optinal, as all have default value set) ****/
     
     _pageControl.iFirstVisiblePageNumber = 1;
-    _pageControl.iTitileViewHeight = 40;
+    _pageControl.iTitleViewHeight = 40;
     _pageControl.iPageIndicatorHeight = 4;
     _pageControl.fontTitleTabText =  [UIFont fontWithName:@"Helvetica" size:16];
     

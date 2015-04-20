@@ -11,6 +11,7 @@ Features
 * Easy to modify code
 * Lazy loading for smoother performance ( Provide view controller instances only when moved to that page )
 * Easy to setup color theme
+* Many customisation parameters
 
 Customisation parameters
 
@@ -25,7 +26,7 @@ Customisation parameters
 @property(readwrite) UIColor        *colorPageOverscrollBackground;
 
 //UI Size related customisation
-@property(readwrite) int            iTitileViewHeight;
+@property(readwrite) int            iTitleViewHeight;
 @property(readwrite) int            iPageIndicatorHeight;
 @property(readwrite) UIFont         *fontTitleTabText;
 
@@ -143,29 +144,35 @@ Customisation parameters
 
 //Conform <ADPageControlDelegate>
 
--(UIViewController *)getViewControllerForPageModel:(ADPageModel *) pageModel
+-(UIViewController *)adPageControlGetViewControllerForPageModel:(ADPageModel *) pageModel
 {
+    NSLog(@"ADPageControl :: Lazy load asking for page %d",pageModel.iPageNumber);
+
     if(pageModel.iPageNumber == 1)
     {
         UIViewController *page1 = [UIViewController new];
-        page1.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:1 blue:204.0/255 alpha:1.0];
+        page1.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:1 blue:204.0/255 alpha:1.0];//Light Green
+
         return page1;
     }
     else if(pageModel.iPageNumber == 2)
     {
         UIViewController *page2 = [UIViewController new];
-        page2.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:204.0/255 blue:1 alpha:1.0];
+        page2.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:204.0/255 blue:1 alpha:1.0];//Light Blue
+
         return page2;
     }
     else if(pageModel.iPageNumber == 3)
     {
         UIViewController *page3 = [UIViewController new];
-        page3.view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:204.0/255 alpha:1.0];
+        page3.view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:204.0/255 alpha:1.0];//Light Yellow
+
         return page3;
     }
-    
+
     return nil;
 }
+
 
 ```
 

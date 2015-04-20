@@ -27,11 +27,11 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view hidden="YES" alpha="0.15000000000000002" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Em4-ms-Aoc" userLabel="ViewIndicatorMoreTitlesToLeft">
+                <view hidden="YES" alpha="0.19999999999999968" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Em4-ms-Aoc" userLabel="ViewIndicatorMoreTitlesToLeft">
                     <rect key="frame" x="0.0" y="0.0" width="10" height="40"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="7" id="L6F-rj-oFX" userLabel="ViewIndicatorMoreTitlesToLeft_Width"/>
+                        <constraint firstAttribute="width" constant="20" id="L6F-rj-oFX" userLabel="ViewIndicatorMoreTitlesToLeft_Width"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -39,11 +39,11 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <view hidden="YES" alpha="0.15000000000000002" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lx6-ck-GYE" userLabel="ViewIndicatorMoreTitlesToRight">
+                <view hidden="YES" alpha="0.19999999999999968" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lx6-ck-GYE" userLabel="ViewIndicatorMoreTitlesToRight">
                     <rect key="frame" x="590" y="0.0" width="10" height="40"/>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="7" id="xh3-wB-1TX" userLabel="ViewIndicatorMoreTitlesToRight_Width"/>
+                        <constraint firstAttribute="width" constant="20" id="xh3-wB-1TX" userLabel="ViewIndicatorMoreTitlesToRight_Width"/>
                     </constraints>
                 </view>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F1S-EG-OaR" userLabel="ScrollViewTitles">
@@ -98,12 +98,12 @@
             <constraints>
                 <constraint firstItem="F1S-EG-OaR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="82U-FM-3o7" userLabel="ScrollViewTitles_Top"/>
                 <constraint firstAttribute="trailing" secondItem="VqO-id-aUg" secondAttribute="trailing" id="TDO-Or-ppB" userLabel="ViewPageContainer_Trailing"/>
-                <constraint firstAttribute="trailing" secondItem="lx6-ck-GYE" secondAttribute="trailing" id="Xeo-Ch-8ch" userLabel="ViewIndicatorMoreTitlesToRight_Trailing"/>
+                <constraint firstAttribute="trailing" secondItem="lx6-ck-GYE" secondAttribute="trailing" constant="-10" id="Xeo-Ch-8ch" userLabel="ViewIndicatorMoreTitlesToRight_Trailing"/>
                 <constraint firstItem="F1S-EG-OaR" firstAttribute="height" secondItem="Em4-ms-Aoc" secondAttribute="height" id="bNp-iD-Q8y" userLabel="ScrollViewTitles_ViewIndicatorMoreTitlesToLeft_EqualHeight"/>
                 <constraint firstItem="lx6-ck-GYE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="d0T-Uk-rxr" userLabel="ViewIndicatorMoreTitlesToRight_Top"/>
                 <constraint firstAttribute="trailing" secondItem="F1S-EG-OaR" secondAttribute="trailing" id="f0Y-Xg-TYh" userLabel="ScrollViewTitles_Trailing"/>
                 <constraint firstItem="F1S-EG-OaR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hV9-o9-Q9P" userLabel="ScrollViewTitles_Leading"/>
-                <constraint firstItem="Em4-ms-Aoc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="krT-go-C2O" userLabel="ViewIndicatorMoreTitlesToLeft_Leading"/>
+                <constraint firstItem="Em4-ms-Aoc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-10" id="krT-go-C2O" userLabel="ViewIndicatorMoreTitlesToLeft_Leading"/>
                 <constraint firstItem="VqO-id-aUg" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qSo-KT-mJC" userLabel="ViewPageContainer_Leading"/>
                 <constraint firstAttribute="bottom" secondItem="VqO-id-aUg" secondAttribute="bottom" id="tZb-8r-I8L" userLabel="ViewPageContainer_Bottom"/>
                 <constraint firstItem="Em4-ms-Aoc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="u3V-Ow-RR6" userLabel="ViewIndicatorMoreTitlesToLeft_Top"/>

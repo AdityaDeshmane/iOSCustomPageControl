@@ -49,7 +49,7 @@
 @property(readwrite) UIColor        *colorPageOverscrollBackground;
 
 //UI Size related customisation
-@property(readwrite) int            iTitileViewHeight;
+@property(readwrite) int            iTitleViewHeight;
 @property(readwrite) int            iPageIndicatorHeight;
 @property(readwrite) UIFont         *fontTitleTabText;
 

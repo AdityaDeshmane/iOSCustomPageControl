@@ -57,8 +57,8 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintTitleViewHeight;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorTop;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorHeight;
-@property (weak, nonatomic) IBOutlet UIView *viewIndicatorMoreTitlesToLeft;
-@property (weak, nonatomic) IBOutlet UIView *viewIndicatorMoreTitlesToRight;
+@property (weak, nonatomic) IBOutlet UIView                 *viewIndicatorMoreTitlesToLeft;
+@property (weak, nonatomic) IBOutlet UIView                 *viewIndicatorMoreTitlesToRight;
 
 
 
@@ -91,10 +91,10 @@
     // Do any additional setup after loading the view from its nib.
     
     [self validateFirstVisiblePageNumber];
-    [self setupIndicatorViewMoreTitleToLeftRight];
     [self initializeTitleViewParameters];
     [self setTabWidthArray];
     [self setupTitleView];
+    [self setupIndicatorViewMoreTitleToLeftRight];
     [self setupPages];
     [self setPageIndicatorToPageNumber:_iFirstVisiblePageNumber andShouldHighlightCurrentPage:YES];
     [self setBounceParameters];
@@ -110,16 +110,6 @@
     _iCurrentVisiblePage = _iFirstVisiblePageNumber;
 }
 
--(void)setupIndicatorViewMoreTitleToLeftRight
-{
-    if(_bShowMoreTabAvailableIndicator)
-    {
-        _scrollViewTitle.delegate = self;
-        [self.view bringSubviewToFront:_viewIndicatorMoreTitlesToLeft];
-        [self.view bringSubviewToFront:_viewIndicatorMoreTitlesToRight];
-    }
-}
-
 -(void)initializeTitleViewParameters
 {
     if(!_fontTitleTabText)
@@ -132,14 +122,14 @@
         _iPageIndicatorHeight = DEFAULT_PAGE_INDICATOR_HEIGHT;
     }
     
-    if(_iTitileViewHeight <= 0)
+    if(_iTitleViewHeight <= 0)
     {
-        _iTitileViewHeight = DEFAULT_TITLE_VIEW_HEIGHT;
+        _iTitleViewHeight = DEFAULT_TITLE_VIEW_HEIGHT;
     }
     
     _constraintPageIndicatorHeight.constant = _iPageIndicatorHeight;
-    _constraintTitleViewHeight.constant = _iTitileViewHeight;
-    _constraintPageIndicatorTop.constant = _iTitileViewHeight - _iPageIndicatorHeight;
+    _constraintTitleViewHeight.constant = _iTitleViewHeight;
+    _constraintPageIndicatorTop.constant = _iTitleViewHeight - _iPageIndicatorHeight;
     
     [_scrollViewTitle setBackgroundColor:_colorTitleBarBackground ? _colorTitleBarBackground : DEFAULT_COLOR_TITLE_BAR_BACKGROUND];
     [_viewPageIndicator setBackgroundColor:_colorPageIndicator ? _colorPageIndicator : DEFAULT_COLOR_PAGE_INDICATOR];
@@ -270,6 +260,50 @@
         NSLog(@"ADPageControl :: TAB %d width : %f",index, expectedLabelWidth);
     }
 }
+
+-(void)setupIndicatorViewMoreTitleToLeftRight
+{
+    if(_bShowMoreTabAvailableIndicator)
+    {
+        _scrollViewTitle.delegate = self;
+        [self.view bringSubviewToFront:_viewIndicatorMoreTitlesToLeft];
+        [self.view bringSubviewToFront:_viewIndicatorMoreTitlesToRight];
+        
+        //Gradient colors, 1st 3 ouside view, last 3 visible with corner radius
+        NSArray *arrGradientColor = [NSArray arrayWithObjects:
+                                     (id)[UIColor blackColor].CGColor,
+                                     (id)[UIColor blackColor].CGColor,
+                                     (id)[UIColor blackColor].CGColor,
+                                     (id)[UIColor blackColor].CGColor,
+                                     (id)[UIColor darkGrayColor].CGColor,
+                                     (id)[UIColor lightGrayColor].CGColor, nil];
+        CGPoint darkPoint = CGPointMake(0.0, 0.5);
+        CGPoint lightPoint = CGPointMake(1.0, 0.5);
+        
+        //Left view
+        [_viewIndicatorMoreTitlesToLeft layoutIfNeeded];
+        CAGradientLayer *gradientLeft = [CAGradientLayer layer];
+        gradientLeft.frame = _viewIndicatorMoreTitlesToLeft.bounds;
+        gradientLeft.colors = arrGradientColor;
+        [gradientLeft setStartPoint:darkPoint];
+        [gradientLeft setEndPoint:lightPoint];
+        gradientLeft.cornerRadius = 12;
+        [_viewIndicatorMoreTitlesToLeft.layer insertSublayer:gradientLeft atIndex:0];
+        [_viewIndicatorMoreTitlesToLeft layoutIfNeeded];
+        
+        //Right view
+        [_viewIndicatorMoreTitlesToRight layoutIfNeeded];
+        CAGradientLayer *gradientRight = [CAGradientLayer layer];
+        gradientRight.frame = _viewIndicatorMoreTitlesToRight.bounds;
+        gradientRight.colors = arrGradientColor;
+        [gradientRight setStartPoint:lightPoint];
+        [gradientRight setEndPoint:darkPoint];
+        gradientRight.cornerRadius = 12;
+        [_viewIndicatorMoreTitlesToRight.layer insertSublayer:gradientRight atIndex:0];
+        [_viewIndicatorMoreTitlesToRight layoutIfNeeded];
+    }
+}
+
 
 -(void)setupPages
 {
