@@ -6,7 +6,7 @@ Android style page control
 ---
 ---
 
-Features
+### Features
 
 * Swipable tab bar
 * Clickable tab to move to spefic page
@@ -19,7 +19,7 @@ Features
 ---
 ---
 
-Customisation parameters
+### Customisation parameters
 
 ```obj-c
 //Initial visible page
