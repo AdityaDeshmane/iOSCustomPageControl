@@ -3,6 +3,9 @@ Android style page control
 
 ![      ](\pageControl.gif "")       
 
+---
+---
+
 Features
 
 * Swipable tab bar
@@ -12,6 +15,9 @@ Features
 * Lazy loading for smoother performance ( Provide view controller instances only when moved to that page )
 * Easy to setup color theme
 * Many customisation parameters
+
+---
+---
 
 Customisation parameters
 
