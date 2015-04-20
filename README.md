@@ -60,9 +60,8 @@ Customisation parameters
 ---
 ---
 
-### How to use
+### How to use ?
 
-#### Sample Code
 
 ```obj-c
 
