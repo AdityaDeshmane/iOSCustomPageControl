@@ -145,9 +145,12 @@ Android style page control
 ```
 
 ```obj-c
-//7. CONFORM TO DELEGATE & HANDLE LAZY LOADING BY PROVIDING VIEW CONTROLLERS
+//7. CONFORM TO DELEGATE 
 
-//Conform <ADPageControlDelegate>
+//7.A : Conform <ADPageControlDelegate>
+
+//7.B : HANDLE LAZY LOADING BY PROVIDING VIEW CONTROLLERS (Optional : Applicable only if you want to lazy load view controllers)
+
 
 -(UIViewController *)adPageControlGetViewControllerForPageModel:(ADPageModel *) pageModel
 {
@@ -176,6 +179,13 @@ Android style page control
     }
 
     return nil;
+}
+
+//7.C : Get index of currenty visible page (Optional)
+
+-(void)adPageControlCurrentVisiblePageIndex:(int) iCurrentVisiblePage
+{
+    NSLog(@"ADPageControl :: Current visible page index : %d",iCurrentVisiblePage);
 }
 
 
