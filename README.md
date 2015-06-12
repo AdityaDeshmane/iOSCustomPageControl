@@ -9,7 +9,7 @@ Android style page control
 ### Features
 
 * Swipable tab bar
-* Clickable tab to move to spefic page
+* Clickable tab to move to specific page
 * Current page indicator with fade effect on non current title
 * Easy to modify code
 * Lazy loading for smoother performance ( Provide view controller instances only when moved to that page )
