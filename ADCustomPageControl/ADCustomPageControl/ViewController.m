@@ -26,7 +26,7 @@
 
 @interface ViewController ()<ADPageControlDelegate>
 {
-    ADPageControl *_pageControl;
+    ADPageControl   *_pageControl;
 }
 
 @end
@@ -40,13 +40,10 @@
     [self setupPageControl];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 -(void)setupPageControl
 {
+    
     /**** 1. Setup pages using model class "ADPageModel" ****/
     
     
@@ -103,10 +100,13 @@
     
     _pageControl.bShowMoreTabAvailableIndicator = NO;
     
+    
+    
     /**** 3. Add as subview ****/
     
     _pageControl.view.frame = CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.height - 20);
     [self.view addSubview:_pageControl.view];
+    
 }
 
 #pragma mark - ADPageControlDelegate 
