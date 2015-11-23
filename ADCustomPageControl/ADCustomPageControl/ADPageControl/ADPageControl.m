@@ -484,7 +484,20 @@
     int iPageNumber = (int)btn.tag - TAB_BTN_TAG_OFFSET;
     
     NSLog(@"ADPageControl :: Tab : %d pressed",iPageNumber );
+    
+    [self goToPageWithPageNumber:iPageNumber];
+}
 
+-(void)goToPageWithPageNumber:(int) iPageNumber
+{
+    if(iPageNumber <0 || iPageNumber >= _arrPageModel.count)
+    {
+        NSLog(@"ADPageControl :: Cannot go to page %d, invalid page index.",iPageNumber );
+        return;
+    }
+    
+    NSLog(@"ADPageControl :: Go to page : %d",iPageNumber );
+    
     dispatch_async(dispatch_get_main_queue(),
    ^{
        ADPageModel *pageModel = [_arrPageModel objectAtIndex:iPageNumber];
@@ -497,7 +510,6 @@
        [self setPageIndicatorToPageNumber:iPageNumber andShouldHighlightCurrentPage:YES];
    });
 }
-
 
 
 #pragma mark - PageViewControllerDataSource
