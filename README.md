@@ -209,9 +209,8 @@ Android style page control
 
 ### Other details
 
-* XCode : Developed using 6.1
-* Base sdk used while development : 8.1
 * Compatible devices : iPhone, iPad, iPod
+* Testing : iOS 6, 7, 8 & 9
 
 ---
 ---
