@@ -26,22 +26,26 @@ Android style page control
 @property(readwrite) int            iFirstVisiblePageNumber;
 
 //Color theme
-@property(readwrite) UIColor        *colorTitleBarBackground;
-@property(readwrite) UIColor        *colorTabText;
-@property(readwrite) UIColor        *colorPageIndicator;
+@property(readwrite) UIColor        *colorTitleBarBackground;       //Top horizontal page listing view background color
+@property(readwrite) UIColor        *colorTabText;                  //Page title text color
+@property(readwrite) UIColor        *colorPageIndicator;            //Horizontal page indicator line color
 @property(readwrite) UIColor        *colorPageOverscrollBackground;
 
 //UI Size related customisation
-@property(readwrite) int            iTitleViewHeight;
-@property(readwrite) int            iPageIndicatorHeight;
+@property(readwrite) int            iTitleViewHeight;               //Top title view height
+@property(readwrite) int            iPageIndicatorHeight;           //Height of horizontal line indicating current page
 @property(readwrite) UIFont         *fontTitleTabText;
 
 //Bounce effect on/off
-@property(readwrite) BOOL           bEnablePagesEndBounceEffect;
-@property(readwrite) BOOL           bEnableTitlesEndBounceEffect;
+@property(readwrite) BOOL           bEnablePagesEndBounceEffect;    //Bounce for pages
+@property(readwrite) BOOL           bEnableTitlesEndBounceEffect;   //Bounce for title
 
-//Title tabview show indicator when more tabs available to left/right
-@property(readwrite) BOOL           bShowMoreTabAvailableIndicator;
+//More pages on right/left indicator
+@property(readwrite) BOOL           bShowMoreTabAvailableIndicator; //Indicator on left and right of title view to show more pages are available
+
+
+//Go to specific page by page index
+-(void)goToPageWithPageNumber:(int) iPageNumber;
 
 ```
 
