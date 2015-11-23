@@ -27,14 +27,18 @@
 @protocol ADPageControlDelegate <NSObject>
 
 @optional
+
+//For lazy loading provide page model when moved to that page
 -(UIViewController *)adPageControlGetViewControllerForPageModel:(ADPageModel *) pageModel;
+
+//Provides current visible page index
 -(void)adPageControlCurrentVisiblePageIndex:(int) iCurrentVisiblePage;
 
 @end
 
 @interface ADPageControl : UIViewController
 
-@property(readwrite) id<ADPageControlDelegate> delegateADPageControl;
+@property(weak) id<ADPageControlDelegate> delegateADPageControl;
 
 //Data
 @property(readwrite) NSMutableArray *arrPageModel;//Only one compulsory parameter, rest all have default values
@@ -43,22 +47,25 @@
 @property(readwrite) int            iFirstVisiblePageNumber;
 
 //Color theme
-@property(readwrite) UIColor        *colorTitleBarBackground;
-@property(readwrite) UIColor        *colorTabText;
-@property(readwrite) UIColor        *colorPageIndicator;
+@property(readwrite) UIColor        *colorTitleBarBackground;       //Top horizontal page listing view background color
+@property(readwrite) UIColor        *colorTabText;                  //Page title text color
+@property(readwrite) UIColor        *colorPageIndicator;            //Horizontal page indicator line color
 @property(readwrite) UIColor        *colorPageOverscrollBackground;
 
 //UI Size related customisation
-@property(readwrite) int            iTitleViewHeight;
-@property(readwrite) int            iPageIndicatorHeight;
+@property(readwrite) int            iTitleViewHeight;               //Top title view height
+@property(readwrite) int            iPageIndicatorHeight;           //Height of horizontal line indicating current page
 @property(readwrite) UIFont         *fontTitleTabText;
 
 //Bounce effect on/off
-@property(readwrite) BOOL           bEnablePagesEndBounceEffect;
-@property(readwrite) BOOL           bEnableTitlesEndBounceEffect;
+@property(readwrite) BOOL           bEnablePagesEndBounceEffect;    //Bounce for pages
+@property(readwrite) BOOL           bEnableTitlesEndBounceEffect;   //Bounce for title
 
-//Title tabview show indicator when more tabs available to left/right
-@property(readwrite) BOOL           bShowMoreTabAvailableIndicator;
+//More pages on right/left indicator
+@property(readwrite) BOOL           bShowMoreTabAvailableIndicator; //Indicator on left and right of title view to show more pages are available
 
+
+//Go to specific page by page index
+-(void)goToPageWithPageNumber:(int) iPageNumber;
 
 @end
