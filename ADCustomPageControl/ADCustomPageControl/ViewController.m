@@ -20,6 +20,10 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
+#define COLOR_LIGHT_RED         [UIColor colorWithRed:1 green:204.0/255 blue:204.0/255.0 alpha:1.0]
+#define COLOR_LIGHT_GREEN       [UIColor colorWithRed:204.0/255 green:1 blue:204.0/255 alpha:1.0]
+#define COLOR_LIGHT_BLUE        [UIColor colorWithRed:204.0/255 green:204.0/255 blue:1 alpha:1.0]
+#define COLOR_LIGHT_YELLOW      [UIColor colorWithRed:1 green:1 blue:204.0/255 alpha:1.0]
 
 #import "ViewController.h"
 #import "ADPageControl.h"
@@ -48,30 +52,30 @@
     
     
     //page 0
-    ADPageModel *pageModel0 = [[ADPageModel alloc] init];
-    UIViewController *page0 = [UIViewController new];
-    page0.view.backgroundColor = [UIColor colorWithRed:1 green:204.0/255 blue:204.0/255.0 alpha:1.0];//Light Red
-    pageModel0.strPageTitle = @"Reeed";
-    pageModel0.iPageNumber = 0;
-    pageModel0.viewController = page0;//You can provide view controller in prior OR use flag "bShouldLazyLoad" to load only when required
+    ADPageModel *pageModel0 =       [[ADPageModel alloc] init];
+    UIViewController *page0 =       [UIViewController new];
+    page0.view.backgroundColor =    COLOR_LIGHT_RED;
+    pageModel0.strPageTitle =       @"Reeed";
+    pageModel0.iPageNumber =        0;
+    pageModel0.viewController =     page0;//You can provide view controller in prior OR use flag "bShouldLazyLoad" to load only when required
     
     //page 1
-    ADPageModel *pageModel1 = [[ADPageModel alloc] init];
-    pageModel1.strPageTitle = @"Greeeeeeeen";
-    pageModel1.iPageNumber = 1;
-    pageModel1.bShouldLazyLoad = YES;
+    ADPageModel *pageModel1 =       [[ADPageModel alloc] init];
+    pageModel1.strPageTitle =       @"Greeeeeeeen";
+    pageModel1.iPageNumber =        1;
+    pageModel1.bShouldLazyLoad =    YES;
     
     //page 2
-    ADPageModel *pageModel2 = [[ADPageModel alloc] init];
-    pageModel2.strPageTitle = @"Blueeee";
-    pageModel2.iPageNumber = 2;
-    pageModel2.bShouldLazyLoad = YES;
+    ADPageModel *pageModel2 =       [[ADPageModel alloc] init];
+    pageModel2.strPageTitle =       @"Blueeee";
+    pageModel2.iPageNumber =        2;
+    pageModel2.bShouldLazyLoad =    YES;
     
     //page 3
-    ADPageModel *pageModel3 = [[ADPageModel alloc] init];
-    pageModel3.strPageTitle = @"Yeeellow";
-    pageModel3.iPageNumber = 3;
-    pageModel3.bShouldLazyLoad = YES;
+    ADPageModel *pageModel3 =       [[ADPageModel alloc] init];
+    pageModel3.strPageTitle =       @"Yeeellow";
+    pageModel3.iPageNumber =        3;
+    pageModel3.bShouldLazyLoad =    YES;
     
     
     
@@ -79,33 +83,51 @@
     
     _pageControl = [[ADPageControl alloc] init];
     _pageControl.delegateADPageControl = self;
-    _pageControl.arrPageModel = [[NSMutableArray alloc] initWithObjects:pageModel0,pageModel1,pageModel2,pageModel3, nil];
+    _pageControl.arrPageModel = [[NSMutableArray alloc] initWithObjects:
+                                 pageModel0,
+                                 pageModel1,
+                                 pageModel2,
+                                 pageModel3, nil];
     
     
     
     /**** 3. Customize parameters (Optinal, as all have default value set) ****/
     
-    _pageControl.iFirstVisiblePageNumber = 1;
-    _pageControl.iTitleViewHeight = 40;
-    _pageControl.iPageIndicatorHeight = 4;
-    _pageControl.fontTitleTabText =  [UIFont fontWithName:@"Helvetica" size:16];
+    _pageControl.iFirstVisiblePageNumber =  1;
+    _pageControl.iTitleViewHeight =         40;
+    _pageControl.iPageIndicatorHeight =     4;
+    _pageControl.fontTitleTabText =         [UIFont fontWithName:@"Helvetica" size:16];
     
-    _pageControl.bEnablePagesEndBounceEffect = NO;
+    _pageControl.bEnablePagesEndBounceEffect =  NO;
     _pageControl.bEnableTitlesEndBounceEffect = NO;
     
-    _pageControl.colorTabText = [UIColor whiteColor];
-    _pageControl.colorTitleBarBackground = [UIColor purpleColor];
-    _pageControl.colorPageIndicator = [UIColor whiteColor];
-    _pageControl.colorPageOverscrollBackground = [UIColor lightGrayColor];
+    _pageControl.colorTabText =                     [UIColor whiteColor];
+    _pageControl.colorTitleBarBackground =          [UIColor purpleColor];
+    _pageControl.colorPageIndicator =               [UIColor whiteColor];
+    _pageControl.colorPageOverscrollBackground =    [UIColor lightGrayColor];
     
-    _pageControl.bShowMoreTabAvailableIndicator = NO;
+    _pageControl.bShowMoreTabAvailableIndicator =   NO;
     
     
     
     /**** 3. Add as subview ****/
     
-    _pageControl.view.frame = CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.height - 20);
     [self.view addSubview:_pageControl.view];
+    _pageControl.view.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView *subview = _pageControl.view;
+    
+    //Leading margin 0, Trailing margin 0
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[subview]-0-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(subview)]];
+    
+    //Top margin 20 for status bar, Bottom margin 0
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[subview]-0-|"
+                                                                      options:0
+                                                                      metrics:nil
+                                                                        views:NSDictionaryOfVariableBindings(subview)]];
+    
     
 }
 
@@ -119,22 +141,22 @@
     
     if(pageModel.iPageNumber == 1)
     {
-        UIViewController *page1 = [UIViewController new];
-        page1.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:1 blue:204.0/255 alpha:1.0];//Light Green
+        UIViewController *page1 =       [UIViewController new];
+        page1.view.backgroundColor =    COLOR_LIGHT_GREEN;
 
         return page1;
     }
     else if(pageModel.iPageNumber == 2)
     {
-        UIViewController *page2 = [UIViewController new];
-        page2.view.backgroundColor = [UIColor colorWithRed:204.0/255 green:204.0/255 blue:1 alpha:1.0];//Light Blue
+        UIViewController *page2 =       [UIViewController new];
+        page2.view.backgroundColor =    COLOR_LIGHT_BLUE;
         
         return page2;
     }
     else if(pageModel.iPageNumber == 3)
     {
-        UIViewController *page3 = [UIViewController new];
-        page3.view.backgroundColor = [UIColor colorWithRed:1 green:1 blue:204.0/255 alpha:1.0];//Light Yellow
+        UIViewController *page3 =       [UIViewController new];
+        page3.view.backgroundColor =    COLOR_LIGHT_YELLOW;
         
         return page3;
     }
