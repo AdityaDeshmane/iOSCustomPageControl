@@ -24,20 +24,23 @@
 #import "ADPageControl.h"
 
 //Constants
-#define DEFAULT_TAB_TEXT_FONT [UIFont fontWithName:@"Helvetica" size:15]
-#define DEFAULT_PAGE_INDICATOR_HEIGHT 3
-#define DEFAULT_TITLE_VIEW_HEIGHT 35
+#define DEFAULT_TAB_TEXT_FONT           [UIFont fontWithName:@"Helvetica" size:15]
+#define DEFAULT_PAGE_INDICATOR_HEIGHT   3
+#define DEFAULT_TITLE_VIEW_HEIGHT       35
 
 //Default colors
-#define DEFAULT_COLOR_TITLE_BAR_BACKGROUND [UIColor colorWithRed:51.0/255 green:0 blue:102.0/255 alpha:1.0]
-#define DEFAULT_COLOR_TAB_TEXT [UIColor redColor]
-#define DEFAULT_COLOR_PAGE_INDICATOR [UIColor redColor]
-#define DEFAULT_COLOR_PAGE_OVERSCROLL_BACKGROUND [UIColor colorWithRed:45.0/255 green:2.0/255 blue:89.0/255 alpha:1.0]
+#define DEFAULT_COLOR_TITLE_BAR_BACKGROUND          [UIColor colorWithRed:51.0/255 green:0 blue:102.0/255 alpha:1.0]
+#define DEFAULT_COLOR_TAB_TEXT                      [UIColor redColor]
+#define DEFAULT_COLOR_PAGE_INDICATOR                [UIColor redColor]
+#define DEFAULT_COLOR_PAGE_OVERSCROLL_BACKGROUND    [UIColor colorWithRed:45.0/255 green:2.0/255 blue:89.0/255 alpha:1.0]
 
 //Tab button tag offset ( starting with tag zero will not work to check subview with tag, as default tag values are 0)
-#define TAB_BTN_TAG_OFFSET 300
-#define HUGE_WIDTH_VALUE 1500
+#define TAB_BTN_TAG_OFFSET      300
+#define HUGE_WIDTH_VALUE        1500
 
+
+@implementation ADPageModel
+@end
 
 @interface ADPageControl ()<UIPageViewControllerDataSource,UIPageViewControllerDelegate,UIScrollViewDelegate>
 {

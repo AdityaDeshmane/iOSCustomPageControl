@@ -16,7 +16,6 @@
 		B2CB343C1AC3FD3700F525E0 /* ADCustomPageControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB343B1AC3FD3700F525E0 /* ADCustomPageControlTests.m */; };
 		B2CB34491AC3FD7D00F525E0 /* ADPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB34471AC3FD7D00F525E0 /* ADPageControl.m */; };
 		B2CB344A1AC3FD7D00F525E0 /* ADPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2CB34481AC3FD7D00F525E0 /* ADPageControl.xib */; };
-		B2CB34501AC40CB300F525E0 /* ADPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB344F1AC40CB300F525E0 /* ADPageModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,8 +45,6 @@
 		B2CB34461AC3FD7D00F525E0 /* ADPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADPageControl.h; sourceTree = "<group>"; };
 		B2CB34471AC3FD7D00F525E0 /* ADPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADPageControl.m; sourceTree = "<group>"; };
 		B2CB34481AC3FD7D00F525E0 /* ADPageControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADPageControl.xib; sourceTree = "<group>"; };
-		B2CB344E1AC40CB300F525E0 /* ADPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADPageModel.h; sourceTree = "<group>"; };
-		B2CB344F1AC40CB300F525E0 /* ADPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADPageModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,8 +131,6 @@
 				B2CB34461AC3FD7D00F525E0 /* ADPageControl.h */,
 				B2CB34471AC3FD7D00F525E0 /* ADPageControl.m */,
 				B2CB34481AC3FD7D00F525E0 /* ADPageControl.xib */,
-				B2CB344E1AC40CB300F525E0 /* ADPageModel.h */,
-				B2CB344F1AC40CB300F525E0 /* ADPageModel.m */,
 			);
 			path = ADPageControl;
 			sourceTree = "<group>";
@@ -243,7 +238,6 @@
 			files = (
 				B2CB34281AC3FD3600F525E0 /* ViewController.m in Sources */,
 				B2CB34491AC3FD7D00F525E0 /* ADPageControl.m in Sources */,
-				B2CB34501AC40CB300F525E0 /* ADPageModel.m in Sources */,
 				B2CB34251AC3FD3600F525E0 /* AppDelegate.m in Sources */,
 				B2CB34221AC3FD3600F525E0 /* main.m in Sources */,
 			);

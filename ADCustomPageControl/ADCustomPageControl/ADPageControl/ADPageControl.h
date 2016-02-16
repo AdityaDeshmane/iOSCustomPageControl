@@ -21,8 +21,32 @@
 //    SOFTWARE.
 
 
+/************************************
+ *******    VERSION  1.0.1       ****
+ ************************************/
+
+
+
 #import <UIKit/UIKit.h>
-#import "ADPageModel.h"
+
+/************************************
+ *******   Page Model Class    ******
+ ************************************/
+
+@interface ADPageModel : NSObject
+
+@property(nonatomic) int                iPageNumber;        //Index of page, starts with 0
+@property(nonatomic) NSString           *strPageTitle;      //Title for page
+@property(nonatomic) UIViewController   *viewController;    //View controller for page
+@property(nonatomic) BOOL               bShouldLazyLoad;    //Setting YES will ask to provide view controller instance when moved to that page using delegate callback adPageControlGetViewControllerForPageModel
+
+@end
+
+
+
+/************************************
+ *****  Page Control Protocol   *****
+ ************************************/
 
 @protocol ADPageControlDelegate <NSObject>
 
@@ -36,33 +60,39 @@
 
 @end
 
+
+
+/************************************
+ ********  Page Control VC   ********
+ ************************************/
+
 @interface ADPageControl : UIViewController
 
 @property(weak) id<ADPageControlDelegate> delegateADPageControl;
 
-//Data
-@property(readwrite) NSMutableArray *arrPageModel;//Only one compulsory parameter, rest all have default values
+//DataSource
+@property(nonatomic) NSMutableArray *arrPageModel;//Only one compulsory parameter, rest all have default values
 
 //Initial visible page
-@property(readwrite) int            iFirstVisiblePageNumber;
+@property(nonatomic) int            iFirstVisiblePageNumber;
 
 //Color theme
-@property(readwrite) UIColor        *colorTitleBarBackground;       //Top horizontal page listing view background color
-@property(readwrite) UIColor        *colorTabText;                  //Page title text color
-@property(readwrite) UIColor        *colorPageIndicator;            //Horizontal page indicator line color
-@property(readwrite) UIColor        *colorPageOverscrollBackground;
+@property(nonatomic) UIColor        *colorTitleBarBackground;       //Top horizontal page name listing view background color
+@property(nonatomic) UIColor        *colorTabText;                  //Page title text color
+@property(nonatomic) UIColor        *colorPageIndicator;            //Horizontal page indicator line color
+@property(nonatomic) UIColor        *colorPageOverscrollBackground; //Background color to show when overscrolled/bounced
 
 //UI Size related customisation
-@property(readwrite) int            iTitleViewHeight;               //Top title view height
-@property(readwrite) int            iPageIndicatorHeight;           //Height of horizontal line indicating current page
-@property(readwrite) UIFont         *fontTitleTabText;
+@property(nonatomic) int            iTitleViewHeight;               //Top title view height
+@property(nonatomic) int            iPageIndicatorHeight;           //Height of horizontal line indicating current page
+@property(nonatomic) UIFont         *fontTitleTabText;              //Page title font
 
 //Bounce effect on/off
-@property(readwrite) BOOL           bEnablePagesEndBounceEffect;    //Bounce for pages
-@property(readwrite) BOOL           bEnableTitlesEndBounceEffect;   //Bounce for title
+@property(nonatomic) BOOL           bEnablePagesEndBounceEffect;    //Bounce for pages
+@property(nonatomic) BOOL           bEnableTitlesEndBounceEffect;   //Bounce for title
 
 //More pages on right/left indicator
-@property(readwrite) BOOL           bShowMoreTabAvailableIndicator; //Indicator on left and right of title view to show more pages are available
+@property(nonatomic) BOOL           bShowMoreTabAvailableIndicator; //Indicator on left and right of title view to show more pages are available
 
 
 //Go to specific page by page index
