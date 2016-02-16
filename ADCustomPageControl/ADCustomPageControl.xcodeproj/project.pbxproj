@@ -13,20 +13,9 @@
 		B2CB342B1AC3FD3600F525E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2CB34291AC3FD3600F525E0 /* Main.storyboard */; };
 		B2CB342D1AC3FD3600F525E0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2CB342C1AC3FD3600F525E0 /* Images.xcassets */; };
 		B2CB34301AC3FD3600F525E0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2CB342E1AC3FD3600F525E0 /* LaunchScreen.xib */; };
-		B2CB343C1AC3FD3700F525E0 /* ADCustomPageControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB343B1AC3FD3700F525E0 /* ADCustomPageControlTests.m */; };
 		B2CB34491AC3FD7D00F525E0 /* ADPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B2CB34471AC3FD7D00F525E0 /* ADPageControl.m */; };
 		B2CB344A1AC3FD7D00F525E0 /* ADPageControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2CB34481AC3FD7D00F525E0 /* ADPageControl.xib */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		B2CB34361AC3FD3700F525E0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B2CB34141AC3FD3600F525E0 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B2CB341B1AC3FD3600F525E0;
-			remoteInfo = ADCustomPageControl;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B2CB341C1AC3FD3600F525E0 /* ADCustomPageControl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ADCustomPageControl.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,9 +28,6 @@
 		B2CB342A1AC3FD3600F525E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2CB342C1AC3FD3600F525E0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B2CB342F1AC3FD3600F525E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		B2CB34351AC3FD3700F525E0 /* ADCustomPageControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ADCustomPageControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2CB343A1AC3FD3700F525E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2CB343B1AC3FD3700F525E0 /* ADCustomPageControlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADCustomPageControlTests.m; sourceTree = "<group>"; };
 		B2CB34461AC3FD7D00F525E0 /* ADPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADPageControl.h; sourceTree = "<group>"; };
 		B2CB34471AC3FD7D00F525E0 /* ADPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADPageControl.m; sourceTree = "<group>"; };
 		B2CB34481AC3FD7D00F525E0 /* ADPageControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADPageControl.xib; sourceTree = "<group>"; };
@@ -55,13 +41,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2CB34321AC3FD3700F525E0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -69,7 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				B2CB341E1AC3FD3600F525E0 /* ADCustomPageControl */,
-				B2CB34381AC3FD3700F525E0 /* ADCustomPageControlTests */,
 				B2CB341D1AC3FD3600F525E0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,7 +56,6 @@
 			isa = PBXGroup;
 			children = (
 				B2CB341C1AC3FD3600F525E0 /* ADCustomPageControl.app */,
-				B2CB34351AC3FD3700F525E0 /* ADCustomPageControlTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -104,23 +81,6 @@
 			children = (
 				B2CB34201AC3FD3600F525E0 /* Info.plist */,
 				B2CB34211AC3FD3600F525E0 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B2CB34381AC3FD3700F525E0 /* ADCustomPageControlTests */ = {
-			isa = PBXGroup;
-			children = (
-				B2CB343B1AC3FD3700F525E0 /* ADCustomPageControlTests.m */,
-				B2CB34391AC3FD3700F525E0 /* Supporting Files */,
-			);
-			path = ADCustomPageControlTests;
-			sourceTree = "<group>";
-		};
-		B2CB34391AC3FD3700F525E0 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B2CB343A1AC3FD3700F525E0 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -155,24 +115,6 @@
 			productReference = B2CB341C1AC3FD3600F525E0 /* ADCustomPageControl.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B2CB34341AC3FD3700F525E0 /* ADCustomPageControlTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B2CB34421AC3FD3700F525E0 /* Build configuration list for PBXNativeTarget "ADCustomPageControlTests" */;
-			buildPhases = (
-				B2CB34311AC3FD3700F525E0 /* Sources */,
-				B2CB34321AC3FD3700F525E0 /* Frameworks */,
-				B2CB34331AC3FD3700F525E0 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B2CB34371AC3FD3700F525E0 /* PBXTargetDependency */,
-			);
-			name = ADCustomPageControlTests;
-			productName = ADCustomPageControlTests;
-			productReference = B2CB34351AC3FD3700F525E0 /* ADCustomPageControlTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -184,10 +126,6 @@
 				TargetAttributes = {
 					B2CB341B1AC3FD3600F525E0 = {
 						CreatedOnToolsVersion = 6.1;
-					};
-					B2CB34341AC3FD3700F525E0 = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = B2CB341B1AC3FD3600F525E0;
 					};
 				};
 			};
@@ -205,7 +143,6 @@
 			projectRoot = "";
 			targets = (
 				B2CB341B1AC3FD3600F525E0 /* ADCustomPageControl */,
-				B2CB34341AC3FD3700F525E0 /* ADCustomPageControlTests */,
 			);
 		};
 /* End PBXProject section */
@@ -219,13 +156,6 @@
 				B2CB344A1AC3FD7D00F525E0 /* ADPageControl.xib in Resources */,
 				B2CB34301AC3FD3600F525E0 /* LaunchScreen.xib in Resources */,
 				B2CB342D1AC3FD3600F525E0 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B2CB34331AC3FD3700F525E0 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,23 +173,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B2CB34311AC3FD3700F525E0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B2CB343C1AC3FD3700F525E0 /* ADCustomPageControlTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B2CB34371AC3FD3700F525E0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B2CB341B1AC3FD3600F525E0 /* ADCustomPageControl */;
-			targetProxy = B2CB34361AC3FD3700F525E0 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B2CB34291AC3FD3600F525E0 /* Main.storyboard */ = {
@@ -381,40 +295,6 @@
 			};
 			name = Release;
 		};
-		B2CB34431AC3FD3700F525E0 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ADCustomPageControlTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ADCustomPageControl.app/ADCustomPageControl";
-			};
-			name = Debug;
-		};
-		B2CB34441AC3FD3700F525E0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ADCustomPageControlTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ADCustomPageControl.app/ADCustomPageControl";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -432,15 +312,6 @@
 			buildConfigurations = (
 				B2CB34401AC3FD3700F525E0 /* Debug */,
 				B2CB34411AC3FD3700F525E0 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B2CB34421AC3FD3700F525E0 /* Build configuration list for PBXNativeTarget "ADCustomPageControlTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B2CB34431AC3FD3700F525E0 /* Debug */,
-				B2CB34441AC3FD3700F525E0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
