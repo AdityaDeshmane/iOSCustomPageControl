@@ -57,13 +57,11 @@ Android style page control
 ### Adding to your project
 
 
-* Add Follwing 5 control files to your project from ADPageControl directory located under "ControlFiles/" or from demo project
+* Add Follwing 3 control files to your project from ADPageControl directory located under "ControlFiles/" or from demo project
 
 ```
 'ADPageControl.h'
 'ADPageControl.m'
-'ADPageModel.h'
-'ADPageModel.h'
 'ADPageControl.xib'
 ```
 
