@@ -22,7 +22,7 @@
 
 
 /************************************
- *******    VERSION  1.0.1       ****
+ *******    VERSION  1.0.2       ****
  ************************************/
 
 
@@ -95,7 +95,15 @@
 @property(nonatomic) BOOL           bShowMoreTabAvailableIndicator; //Indicator on left and right of title view to show more pages are available
 
 
-//Go to specific page by page index
--(void)goToPageWithPageNumber:(int) iPageNumber;
+//Fixed tab width
+/*
+ Default - Calculates based on text length, dont set any value
+ Custom - E.g to show 3 tabs at a time configure control like  _pageControl.iCustomTabWidth =  [[UIScreen mainScreen] bounds].size.width/3;
+ */
+@property(nonatomic) int            iCustomFixedTabWidth;
+
+
+
+-(void)goToPageWithPageNumber:(int) iPageNumber;                    //Go to specific page by page index
 
 @end

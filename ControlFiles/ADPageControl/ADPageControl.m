@@ -239,28 +239,35 @@
     
     for (int index = 0; index < _arrPageModel.count ; index++)
     {
-        ADPageModel *pageModel = [_arrPageModel objectAtIndex:index];
-        NSString *textString = pageModel.strPageTitle;
-        
-        if([textString respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)])//iOS 7
+        if(_iCustomFixedTabWidth > 0)//Use custom tab width
         {
-            expectedLabelWidth= [textString boundingRectWithSize:CGSizeMake(HUGE_WIDTH_VALUE,requiredHeight)
-                                                         options:NSStringDrawingUsesLineFragmentOrigin
-                                                      attributes:@{NSFontAttributeName:_fontTitleTabText}
-                                                         context:nil].size.width;
+            [_arrTabWidth addObject:[NSNumber numberWithFloat:_iCustomFixedTabWidth]];
         }
-        else//iOS 6 and below
+        else//Calculate tab width based on text
         {
-            //Dont worry about warnings, this code will execute only for iOS 6 & below
-            CGSize constraintSize = CGSizeMake(HUGE_WIDTH_VALUE, requiredHeight);
-            expectedLabelWidth = [textString sizeWithFont:_fontTitleTabText
-                                        constrainedToSize:constraintSize
-                                            lineBreakMode:UILineBreakModeWordWrap].width;
+            ADPageModel *pageModel = [_arrPageModel objectAtIndex:index];
+            NSString *textString = pageModel.strPageTitle;
+            
+            if([textString respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)])//iOS 7
+            {
+                expectedLabelWidth= [textString boundingRectWithSize:CGSizeMake(HUGE_WIDTH_VALUE,requiredHeight)
+                                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                                          attributes:@{NSFontAttributeName:_fontTitleTabText}
+                                                             context:nil].size.width;
+            }
+            else//iOS 6 and below
+            {
+                //Dont worry about warnings, this code will execute only for iOS 6 & below
+                CGSize constraintSize = CGSizeMake(HUGE_WIDTH_VALUE, requiredHeight);
+                expectedLabelWidth = [textString sizeWithFont:_fontTitleTabText
+                                            constrainedToSize:constraintSize
+                                                lineBreakMode:UILineBreakModeWordWrap].width;
+            }
+            
+            [_arrTabWidth addObject:[NSNumber numberWithFloat:expectedLabelWidth+30]];
+                
+            NSLog(@"ADPageControl :: TAB %d width : %f",index, expectedLabelWidth);
         }
-        
-        [_arrTabWidth addObject:[NSNumber numberWithFloat:expectedLabelWidth+30]];
-        
-        NSLog(@"ADPageControl :: TAB %d width : %f",index, expectedLabelWidth);
     }
 }
 
