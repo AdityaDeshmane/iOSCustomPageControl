@@ -44,6 +44,12 @@ Android style page control
 //More pages on right/left indicator
 @property(nonatomic) BOOL           bShowMoreTabAvailableIndicator; //Indicator on left and right of title view to show more pages are available
 
+//Fixed tab width
+/*
+ Default - Calculates based on text length, dont set any value
+ Custom - E.g to show 3 tabs at a time configure control like  _pageControl.iCustomTabWidth =  [[UIScreen mainScreen] bounds].size.width/3;
+ */
+@property(nonatomic) int            iCustomFixedTabWidth;
 
 //Go to specific page by page index
 -(void)goToPageWithPageNumber:(int) iPageNumber;
