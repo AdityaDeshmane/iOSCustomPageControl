@@ -109,6 +109,9 @@
     _pageControl.bShowMoreTabAvailableIndicator =   NO;
     
     
+    //Uncomment to check custom fixed width tabs
+    //_pageControl.iCustomTabWidth    =               [[UIScreen mainScreen] bounds].size.width/3;
+    
     
     /**** 3. Add as subview ****/
     
