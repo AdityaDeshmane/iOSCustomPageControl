@@ -151,6 +151,8 @@ Android style page control
     _pageControl.colorPageOverscrollBackground =    [UIColor lightGrayColor];
     
     _pageControl.bShowMoreTabAvailableIndicator =   NO;
+    _pageControl.bHideShadow                    =   NO;
+
 	
 ```
 
