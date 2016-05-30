@@ -237,18 +237,11 @@ Android style page control
 ### Other details
 
 * Compatible devices : iPhone, iPad, iPod
-* Testing : iOS 6, 7, 8 & 9
+* Testing : iOS 6, 7, 8 & 9 (I have used this in my apps it is well tested and stable)
 
 ---
 ---
 
-### TODO
-
-* Component polishing
-* More generalizations
-
----
----
 ## License
 
 iOSCustomPageControl is available under the MIT license. See the LICENSE file for more info.
