@@ -107,6 +107,8 @@
     _pageControl.colorPageOverscrollBackground =    [UIColor lightGrayColor];
     
     _pageControl.bShowMoreTabAvailableIndicator =   NO;
+    _pageControl.bHideShadow                    =   NO;
+
     
     
     //Uncomment to check custom fixed width tabs
