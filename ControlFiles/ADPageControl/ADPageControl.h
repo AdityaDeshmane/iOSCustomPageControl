@@ -94,6 +94,9 @@
 //More pages on right/left indicator
 @property(nonatomic) BOOL           bShowMoreTabAvailableIndicator; //Indicator on left and right of title view to show more pages are available
 
+//Hide shodow
+@property(nonatomic) BOOL           bHideShadow;                    //Hides shadow between title bar and pages
+
 
 //Fixed tab width
 /*

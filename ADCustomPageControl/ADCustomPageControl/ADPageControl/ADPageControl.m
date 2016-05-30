@@ -62,6 +62,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint   *constraintPageIndicatorHeight;
 @property (weak, nonatomic) IBOutlet UIView                 *viewIndicatorMoreTitlesToLeft;
 @property (weak, nonatomic) IBOutlet UIView                 *viewIndicatorMoreTitlesToRight;
+@property (weak, nonatomic) IBOutlet UIView                 *viewShadow;
 
 
 
@@ -99,6 +100,7 @@
     [self setupTitleView];
     [self setupIndicatorViewMoreTitleToLeftRight];
     [self setupPages];
+    [self setupShadow];
     [self setPageIndicatorToPageNumber:_iFirstVisiblePageNumber andShouldHighlightCurrentPage:YES];
     [self setBounceParameters];
 }
@@ -332,6 +334,40 @@
     [_viewContainer addSubview:_pageViewController.view];
     [_pageViewController.view setFrame:_viewContainer.bounds];
     [_viewContainer setBackgroundColor:_colorPageOverscrollBackground ? _colorPageOverscrollBackground : DEFAULT_COLOR_PAGE_OVERSCROLL_BACKGROUND];
+}
+
+-(void)setupShadow
+{
+    if(_bHideShadow)
+    {
+        _viewShadow.hidden = YES;
+    }
+    else
+    {
+        [self.view bringSubviewToFront:_viewShadow];
+
+        NSArray *arrGradientColor = [NSArray arrayWithObjects:
+                                     (id)[UIColor blackColor].CGColor,
+                                     (id)[UIColor blackColor].CGColor,
+                                     (id)[UIColor darkGrayColor].CGColor,
+                                     (id)[UIColor darkGrayColor].CGColor,
+                                     (id)[UIColor lightGrayColor].CGColor,
+                                     (id)[UIColor lightGrayColor].CGColor,
+                                     nil];
+        
+        CGPoint darkPoint = CGPointMake(0.5, 0.0);
+        CGPoint lightPoint = CGPointMake(0.5, 1.0);
+        
+        [_viewShadow layoutIfNeeded];
+        CAGradientLayer *gradient   = [CAGradientLayer layer];
+        gradient.frame              = _viewShadow.bounds;
+        gradient.colors             = arrGradientColor;
+        
+        [gradient setStartPoint:darkPoint];
+        [gradient setEndPoint:lightPoint];
+        [_viewShadow.layer insertSublayer:gradient atIndex:0];
+        [_viewShadow layoutIfNeeded];
+    }
 }
 
 
