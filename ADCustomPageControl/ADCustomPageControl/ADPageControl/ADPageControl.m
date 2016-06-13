@@ -359,8 +359,12 @@
         CGPoint lightPoint = CGPointMake(0.5, 1.0);
         
         [_viewShadow layoutIfNeeded];
+        
+        
+        CGRect frameLayer = _viewShadow.bounds;
+        frameLayer.size.width = 4096;//TODO: Remove hardcoded width, find root cause
         CAGradientLayer *gradient   = [CAGradientLayer layer];
-        gradient.frame              = _viewShadow.bounds;
+        gradient.frame              = frameLayer;
         gradient.colors             = arrGradientColor;
         
         [gradient setStartPoint:darkPoint];
