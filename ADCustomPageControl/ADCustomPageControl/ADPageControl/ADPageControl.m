@@ -409,6 +409,7 @@
          _constraintPageIndicatorLeading.constant = fLeading;
          _constraintPageIndicotorWidth.constant = fWidth;
          [_viewPageIndicator layoutIfNeeded];
+         [self.view layoutIfNeeded];
      }];
     
     
