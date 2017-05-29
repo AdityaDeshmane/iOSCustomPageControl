@@ -1,8 +1,7 @@
 # iOSCustomPageControl
 Android style page control
 
-![      ](\pageControl.gif "")       
-
+![](/pageControl.gif "") 
 ---
 ---
 
